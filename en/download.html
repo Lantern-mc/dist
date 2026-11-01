@@ -3,14 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Download - Lantern Launcher</title>
-<meta name="description" content="Download every version of Lantern Launcher.">
+<title>Get the launcher · Lantern</title>
+<meta name="description" content="Download the latest and earlier versions of the Lantern launcher for Windows.">
 <meta name="theme-color" content="#0b0c0e">
 <link rel="icon" href="../assets/img/favicon.ico">
-<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/v2/site.css">
 <link rel="alternate" hreflang="ko" href="../download">
+<link rel="alternate" hreflang="en" href="download">
+<script src="../assets/releases.js" defer></script>
 </head>
 <body>
+<div class="bg" aria-hidden="true"><i class="glow"></i><i class="grid"></i></div>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top">
   <div class="top-in">
@@ -19,20 +22,16 @@
     <a class="lang" href="../download" hreflang="ko" lang="ko" title="한국어로 보기">한국어</a>
   </div>
 </header>
-<main id="main">
-<div class="wrap article">
-  <div class="page-head"><h1>Get the launcher</h1><p>For Windows 10/11. The latest version at the top is the one you want. See <a href="https://github.com/Lantern-mc/dist/wiki/설치">Install</a> for the steps.</p></div>
-  <div id="releases" class="read">
-    <p class="rel-loading">Loading versions…</p>
-    <noscript>
-      <p>Could not load the list. You can still get the latest version below.</p>
-      <div class="actions"><a class="btn" href="https://github.com/Lantern-mc/dist/releases/latest/download/LanternLauncher.exe">Download LanternLauncher.exe</a></div>
-      <p class="small"><a href="https://github.com/Lantern-mc/dist/releases">See all versions on GitHub</a></p>
-    </noscript>
+<main id="main" class="dl-main">
+<section class="ops-section wrap dl-page" aria-labelledby="dl-title">
+  <h1 id="dl-title">Get the launcher</h1>
+  <p class="lead">For Windows 10 and 11. It installs without administrator rights, and once installed the launcher fetches new versions on its own. New here? Read the <a href="https://github.com/Lantern-mc/dist/wiki/설치">install guide</a> too.</p>
+  <div id="releases" class="dl-releases" aria-live="polite">
+    <p class="dl-loading">Loading versions…</p>
+    <noscript><article class="dl-latest dl-fallback"><div class="dl-latest-main"><div class="actions"><a class="btn" href="https://github.com/Lantern-mc/dist/releases/latest/download/LanternLauncher.exe">Download LanternLauncher.exe</a></div><p class="dl-sub"><a href="https://github.com/Lantern-mc/dist/releases">See all versions on GitHub</a></p></div></article></noscript>
   </div>
-</div>
+</section>
 </main>
-<footer class="foot"><div class="foot-in"><p>Lantern Launcher is a Windows program for joining Lantern servers. It is an independent project, not affiliated with Mojang, Microsoft or CurseForge; Minecraft and CurseForge are trademarks of their owners.</p><p>Fonts: IBM Plex Sans KR (&copy; 2017 IBM Corp.) and JetBrains Mono (&copy; 2020 The JetBrains Mono Project Authors), converted to the WOFF2 web format and used under the SIL Open Font License 1.1. Full licence texts: <a href="../assets/fonts/IBMPlexSansKR-OFL.txt">IBM Plex Sans KR</a>, <a href="../assets/fonts/JetBrainsMono-OFL.txt">JetBrains Mono</a>.</p></div></footer>
-<script src="../assets/releases.js" defer></script>
+<footer class="foot"><div class="foot-in"><p class="foot-links"><a href="https://github.com/Lantern-mc/dist/wiki/">Wiki (Korean)</a> · <a href="https://github.com/Lantern-mc/dist/wiki/개인정보-처리방침">Privacy policy (Korean)</a> · <a href="https://github.com/Lantern-mc/dist/wiki/변경-기록">Changelog (Korean)</a></p><p>Lantern Launcher is a Windows program for joining Lantern servers. It is an independent project with no affiliation with Mojang, Microsoft or CurseForge. Minecraft and CurseForge are trademarks of their respective owners.</p><p>Fonts: IBM Plex Sans KR (© 2017 IBM Corp.) and JetBrains Mono (© 2020 The JetBrains Mono Project Authors), converted to the web font format (WOFF2) and used under the SIL Open Font License 1.1. Full license texts: <a href="../assets/fonts/IBMPlexSansKR-OFL.txt">IBM Plex Sans KR</a>, <a href="../assets/fonts/JetBrainsMono-OFL.txt">JetBrains Mono</a>.</p></div></footer>
 </body>
 </html>
