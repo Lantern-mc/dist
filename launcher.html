@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>런처 · Lantern</title>
+<meta name="description" content="Windows용 Lantern 런처 받기, CurseForge와 마이크로소프트 계정 준비, 첫 실행부터 서버 접속까지 안내합니다.">
+<meta name="theme-color" content="#0b0c0e">
+<link rel="icon" href="assets/img/favicon.ico">
+<link rel="stylesheet" href="assets/v2/site.css">
+<link rel="stylesheet" href="assets/v2/mock.css">
+<script src="assets/v2/scenes.js" defer></script>
+<link rel="alternate" hreflang="ko" href="launcher.html">
+<link rel="alternate" hreflang="en" href="en/launcher.html">
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i class="glow"></i><i class="grid"></i></div>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="index.html"><img src="assets/img/lantern-64.png" width="28" height="28" alt=""><span>Lantern</span></a>
+    <nav aria-label="주 메뉴"><ul class="nav"><li><a href="index.html">소개</a></li><li><a href="ops.html">서버 운영</a></li><li><a href="launcher.html" aria-current="page">런처</a></li></ul></nav>
+    <a class="lang" href="en/launcher.html" hreflang="en" lang="en" title="Read this page in English">English</a>
+  </div>
+</header>
+<main id="main" class="launcher-main">
+<section class="ops-section wrap launcher-hero" aria-labelledby="launcher-prep-title">
+  <p class="eyebrow">플레이어</p>
+  <h1 id="launcher-prep-title">Lantern 런처로 서버에 들어가기</h1>
+  <p class="lead">들어갈 서버의 웹 패널에서 <span class="ui">서버 들어가기</span>를 누르면 런처가 모드팩을 설치하고 서버에 접속합니다.</p>
+
+  <h2 id="launcher-before">시작하기 전에</h2>
+  <div class="launcher-prep" aria-labelledby="launcher-before">
+    <div class="launcher-prep-cards">
+      <article class="launcher-prep-card">
+        <h3>서버 웹 패널 주소</h3>
+        <p>Lantern 서버는 서버마다 자기 웹사이트(웹 패널)가 있습니다. 주소는 서버 운영진에게 받으세요.</p>
+      </article>
+      <article class="launcher-prep-card">
+        <h3>Windows</h3>
+        <p>Windows용 프로그램입니다.</p>
+      </article>
+      <article class="launcher-prep-card">
+        <h3>CurseForge 앱</h3>
+        <p>모드팩은 CurseForge 앱으로 설치합니다. 게임 실행은 런처가 합니다.</p>
+      </article>
+      <article class="launcher-prep-card">
+        <h3>마이크로소프트 계정</h3>
+        <p>마인크래프트 <strong>자바 에디션</strong>을 소유한 계정으로 로그인합니다.</p>
+      </article>
+    </div>
+    <aside class="launcher-prep-note">
+      <strong>화이트리스트 확인</strong>
+      <p>화이트리스트를 쓰는 서버에서는 로그인한 마이크로소프트 계정의 닉네임과 UUID로 서버가 목록에 있는지 확인합니다. 로그아웃 상태에서는 확인을 할 수 없고, <span class="ui">CurseForge로 실행</span>으로 확인 없이 진행할 수 있습니다.</p>
+    </aside>
+  </div>
+
+  <div class="launcher-dl-card" aria-labelledby="launcher-dl-title">
+    <h2 id="launcher-dl-title">런처 받기</h2>
+    <p class="ops-muted" style="margin:.5rem 0 1rem;color:var(--muted);font-size:.95rem">관리자 권한 없이 설치됩니다.</p>
+    <div class="actions">
+      <a class="btn" href="https://github.com/Lantern-mc/dist/releases/latest/download/LanternLauncher.exe">런처 받기</a>
+    </div>
+    <ul>
+      <li><strong>SmartScreen</strong> — Windows가 서명 없는 파일이라 <span class="ui">Windows의 PC 보호</span> 창을 띄울 수 있습니다. <span class="ui">추가 정보</span> → <span class="ui">실행</span>으로 설치를 이어가세요.</li>
+      <li><strong>파일 확인</strong> — PowerShell <code>Get-FileHash</code>로 내려받은 실행 파일의 SHA-256을 릴리스에 함께 올라온 해시 파일 첫 줄과 비교할 수 있습니다.</li>
+      <li><strong>제거</strong> — Windows <span class="ui">설정</span> › <span class="ui">앱</span>에서 Lantern을 제거합니다. CurseForge 프로필은 그대로 남습니다.</li>
+    </ul>
+    <p class="small-link"><a href="https://github.com/Lantern-mc/dist/wiki/설치">설치 · SmartScreen · 제거 자세히 보기</a></p>
+  </div>
+</section>
+
+<section class="chapter" id="ch-first" data-chapter="first" data-tint="#f5b14c" style="--steps:5">
+  <div class="chapter-pin">
+    <div class="chapter-copy">
+      <p class="eyebrow">처음 실행하면</p>
+      <h2>처음 실행할 때</h2>
+      <ol class="steps">
+        <li class="step"><span class="step-text">CurseForge 앱이 설치돼 있는지 확인합니다.</span></li>
+        <li class="step"><span class="step-text">마이크로소프트 계정으로 로그인합니다.</span></li>
+        <li class="step"><span class="step-text">운영진에게 받은 서버 웹 패널 주소로 들어가 Discord로 로그인하고, 서버 들어가기를 누른 뒤 런처 창에서 연결을 허용합니다.</span></li>
+        <li class="step"><span class="step-text">런처가 모드팩을 설치·맞춥니다.</span></li>
+        <li class="step"><span class="step-text">게임 실행으로 서버에 들어갑니다.</span></li>
+      </ol>
+    </div>
+    <div class="scene mock first-scene at-1 at-2 at-3 at-4 at-5" data-scene data-step="5" aria-hidden="true" inert>
+      <div class="first-stage">
+        <div class="win win-launcher first-onb">
+          <div class="win-bar"><img src="assets/img/lantern-64.png" alt=""><span>Lantern Launcher</span></div>
+          <div class="onb-pane">
+            <div class="first-view first-cf">
+              <div class="onb-head">
+                <h4>CurseForge 앱 확인</h4>
+                <p>모드팩 설치는 CurseForge 앱이 맡고, 게임 실행은 Lantern이 합니다.</p>
+              </div>
+              <div class="onb-card ok">CurseForge를 찾았습니다</div>
+              <div class="onb-foot"><span class="btn">이전</span><span class="btn primary">다음</span></div>
+            </div>
+            <div class="first-view first-login">
+              <div class="onb-head">
+                <h4>마인크래프트 계정 로그인</h4>
+                <p>한 번 로그인하면 모든 Lantern 서버에 같은 계정으로 접속합니다.</p>
+              </div>
+              <ul class="onb-bullets">
+                <li>로그인은 브라우저에서 마이크로소프트가 처리합니다</li>
+                <li>마인크래프트 자바 에디션을 가진 계정이 필요합니다</li>
+              </ul>
+              <div class="onb-profile"><i aria-hidden="true"></i><b>Steve</b></div>
+              <div class="onb-foot"><span class="btn">이전</span><span class="btn primary">다음</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="first-connect">
+          <div class="win win-panel first-connect-panel">
+            <div class="win-bar"><i></i><i></i><i></i><span>Aurora SMP</span></div>
+            <div class="pw-body">
+              <nav class="pw-side" aria-hidden="true">
+                <div class="pw-brand"><img src="assets/img/lantern-64.png" alt="">Lantern</div>
+                <span class="pw-group">운영</span>
+                <span class="pw-item">콘솔</span>
+                <span class="pw-item">플레이어</span>
+                <span class="pw-group">관리</span>
+                <span class="pw-item">역할과 권한</span>
+                <span class="pw-item on">설정</span>
+              </nav>
+              <div class="pw-main">
+                <div class="pw-head"><h4>Discord</h4></div>
+                <p class="mods-muted" style="margin:0 0 8px">Discord로 계속하기</p>
+                <span class="btn primary small">Discord로 계속하기</span>
+                <ol class="first-connect-steps" style="margin-top:14px">
+                  <li><span>1</span> 서버 웹 패널에 로그인</li>
+                  <li><span>2</span> <span class="chip">서버 들어가기</span> 누르기</li>
+                  <li><span>3</span> Lantern에 뜨는 창에서 연결</li>
+                </ol>
+                <div class="ph-launcher-card pw-card" style="margin-top:10px">
+                  <b>런처</b>
+                  <p class="mods-muted">위의 '서버 들어가기' 버튼을 누르면 모드팩과 마인크래프트가 준비되고 바로 서버에 들어가요.</p>
+                  <div class="first-join-row">
+                    <span class="btn primary small">서버 들어가기</span>
+                    <i class="cursor first-cursor" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="win win-launcher first-connect-launcher">
+            <div class="win-bar"><img src="assets/img/lantern-64.png" alt=""><span>Lantern Launcher</span></div>
+            <div class="launcher-dlg">
+              <h4>이 서버를 연결할까요?</h4>
+              <p class="mods-muted">웹 패널에서 '서버 들어가기'를 눌러 온 요청입니다.</p>
+              <p class="launcher-dlg-foot">연결은 설정 › 연결한 서버에서 끊을 수 있습니다.</p>
+              <div class="launcher-dlg-actions"><span class="btn">거절</span><span class="btn primary on">연결</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="win win-launcher first-main">
+          <div class="win-bar"><img src="assets/img/lantern-64.png" alt=""><span>Lantern Launcher</span></div>
+          <div class="lw-body">
+            <div class="lw-side">
+              <div class="lw-item on"><span class="tile"></span><span class="lw-item-text"><b>Aurora SMP</b><small class="lw-state first-side-busy">게임 시작 중</small></span></div>
+              <div class="lw-item add" title="서버 추가"><span class="lw-add-icon" aria-hidden="true">+</span><span class="sr">서버 추가</span></div>
+            </div>
+            <div class="lw-hero">
+              <div class="lw-art" aria-hidden="true"></div>
+              <div class="lw-card">환영합니다. 접속 전에 공지를 확인하세요.</div>
+              <div class="lw-name"><b>Aurora SMP</b></div>
+              <div class="lw-meta">모드팩 2.4.0 · 마인크래프트 1.21.1 · NeoForge</div>
+              <div class="lw-status"><span class="dot" data-s="on"></span>온라인 · 3명</div>
+              <div class="first-install pw-card">
+                <div class="pw-head"><h4>모드팩 설치 중</h4></div>
+                <div class="bar run first-install-bar"><i></i></div>
+              </div>
+              <div class="first-launch">
+                <div class="lw-actions"><span class="btn primary on first-play">게임 실행</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ops-section wrap" aria-labelledby="launcher-wl-title">
+  <p class="eyebrow">접속 전에</p>
+  <h2 id="launcher-wl-title">화이트리스트 상태</h2>
+  <p>화이트리스트를 쓰는 서버에서는 게임 실행 전에 계정 상태를 확인합니다. 확인에 실패하거나 시간이 지나면 경고 없이 실행을 시도할 수 있습니다.</p>
+  <div class="launcher-wl-grid">
+    <div class="launcher-wl-card mock" aria-hidden="true" inert>
+      <div class="win win-launcher" style="max-width:100%">
+        <div class="win-bar"><img src="assets/img/lantern-64.png" alt=""><span>Lantern Launcher</span></div>
+        <div class="launcher-dlg" style="margin:14px">
+          <h4>화이트리스트에 없는 계정입니다</h4>
+          <p class="mods-muted">이 계정(Steve)은 서버 화이트리스트에 없습니다.<br>접속이 거부될 수 있습니다.<br>운영진에게 신청해 주세요.</p>
+          <div class="launcher-dlg-actions"><span class="btn">취소</span><span class="btn primary">그래도 실행</span></div>
+        </div>
+      </div>
+      <p>목록에 없으면 접속이 거부될 수 있다고 알립니다. <strong>그래도 실행</strong>을 누르면 경고를 확인한 뒤 게임 실행을 계속합니다.</p>
+    </div>
+    <div class="launcher-wl-card mock" aria-hidden="true" inert>
+      <div class="win win-launcher" style="max-width:100%">
+        <div class="win-bar"><img src="assets/img/lantern-64.png" alt=""><span>Lantern Launcher</span></div>
+        <div class="launcher-dlg" style="margin:14px">
+          <h4>화이트리스트 승인 대기 중입니다</h4>
+          <p class="mods-muted">화이트리스트 신청이 승인 대기 중입니다.<br>승인 전에는 접속이 거부될 수 있습니다.</p>
+          <div class="launcher-dlg-actions"><span class="btn">취소</span><span class="btn primary">그래도 실행</span></div>
+        </div>
+      </div>
+      <p>신청이 대기 중이면 승인 전 접속이 거부될 수 있습니다. 마찬가지로 <strong>그래도 실행</strong>으로 시도할 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="ops-section wrap" aria-labelledby="launcher-more-title">
+  <p class="eyebrow">더 보기</p>
+  <h2 id="launcher-more-title">자세한 안내</h2>
+  <nav class="launcher-more" aria-label="런처 관련 문서">
+    <a href="https://github.com/Lantern-mc/dist/wiki/설치">설치</a>
+    <a href="https://github.com/Lantern-mc/dist/wiki/처음-시작하기">처음 시작하기</a>
+    <a href="https://github.com/Lantern-mc/dist/wiki/사용법">사용법</a>
+    <a href="https://github.com/Lantern-mc/dist/wiki/문제-해결">문제 해결</a>
+  </nav>
+</section>
+
+</main>
+<footer class="foot"><div class="foot-in"><p class="foot-links"><a href="https://github.com/Lantern-mc/dist/wiki/">위키</a> · <a href="https://github.com/Lantern-mc/dist/wiki/개인정보-처리방침">개인정보 처리방침</a> · <a href="https://github.com/Lantern-mc/dist/wiki/변경-기록">변경 기록</a></p><p>Lantern Launcher는 Lantern 서버에 들어가기 위한 Windows용 프로그램입니다. Mojang, Microsoft, CurseForge와 관련 없는 독립 프로젝트이며, Minecraft와 CurseForge는 각 권리자의 상표입니다.</p><p>글꼴: IBM Plex Sans KR(© 2017 IBM Corp.)과 JetBrains Mono(© 2020 The JetBrains Mono Project Authors)를 SIL Open Font License 1.1에 따라 웹 글꼴 형식(WOFF2)으로 변환해 사용합니다. 라이선스 전문: <a href="assets/fonts/IBMPlexSansKR-OFL.txt">IBM Plex Sans KR</a>, <a href="assets/fonts/JetBrainsMono-OFL.txt">JetBrains Mono</a>.</p></div></footer>
+</body>
+</html>

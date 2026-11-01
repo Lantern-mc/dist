@@ -1,0 +1,650 @@
+/* Mockup kit: the launcher and the web panel drawn in CSS. Everything is scoped under .mock.
+   Colours follow Theme.cs (launcher) and the panel theme.css. */
+@property --p { syntax: "<number>"; inherits: false; initial-value: 0; }
+
+.mock {
+  --m-window: #18191d; --m-chrome: #131417; --m-border: #2a2c32; --m-text: #ecebe7; --m-muted: #b9b7b0;
+  --m-secondary: #23252b; --m-raised: #1e2025; --m-danger: #c42b1c; --m-ok: #8fdc79;
+  --brand: #f5b14c; --brand-text: #241703; --brand-ink: #241703;
+  --m-art-a: #8a6a3a; --m-art-b: #fff1c9;
+  color: var(--m-text); font: 13px/1.45 "IBM Plex Sans KR", system-ui, sans-serif; text-align: left;
+}
+.mock *, .mock *::before, .mock *::after { box-sizing: border-box; }
+.mock p, .mock h4 { margin: 0; }
+.mock .mono { font-family: "JetBrains Mono", monospace; }
+
+/* window frame: layered soft shadows plus a warm halo from the accent */
+.mock .win {
+  position: relative; border-radius: 14px; background: var(--m-window); border: 1px solid var(--m-border); overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / .03) inset,
+    0 2px 4px rgb(0 0 0 / .35),
+    0 12px 24px -6px rgb(0 0 0 / .5),
+    0 40px 80px -20px rgb(0 0 0 / .65),
+    0 0 90px -18px color-mix(in srgb, var(--brand) 45%, transparent);
+  transition: box-shadow .6s ease;
+}
+.mock .win::before { /* top light edge */
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; z-index: 3; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / .22), transparent);
+}
+.mock .win-bar {
+  display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; background: var(--m-chrome);
+  border-bottom: 1px solid var(--m-border); color: var(--m-muted); font-size: 11.5px; position: relative; z-index: 2;
+}
+/* Windows 11 frame: 8px corners, caption buttons (minimise, maximise, close) at the top right. */
+.mock .win { border-radius: 8px; }
+.mock .win-bar { height: 32px; padding: 0 0 0 12px; gap: 8px; }
+.mock .win-bar > i { display: none; }
+.mock .win-bar > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.mock .win-bar img { width: 16px; height: 16px; image-rendering: pixelated; }
+.mock .win-bar::after {
+  content: ""; flex: none; margin-left: auto; width: 120px; height: 100%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='32' fill='none' stroke='%23b9b7b0' stroke-width='1'%3E%3Cpath d='M15 16.5h10'/%3E%3Crect x='55.5' y='11.5' width='9' height='9' rx='1.5'/%3E%3Cpath d='M95.5 11.5l9 9M104.5 11.5l-9 9'/%3E%3C/svg%3E") no-repeat center / 120px 32px;
+}
+/* The web panel is a page in a Windows browser: one tab in the tab strip instead of a title. */
+.mock .win-bar:has(> i) { padding-left: 8px; align-items: flex-end; }
+.mock .win-bar:has(> i) > span {
+  position: relative; display: flex; align-items: center; gap: 7px; height: 26px; max-width: 14rem;
+  margin-bottom: -1px; padding: 0 28px 0 10px; border: 1px solid var(--m-border); border-bottom: 0;
+  border-radius: 8px 8px 0 0; background: var(--m-window); color: var(--m-text); font-size: 11.5px;
+}
+.mock .win-bar:has(> i) > span::before {
+  content: ""; flex: none; width: 14px; height: 14px;
+  background: url("../img/lantern-64.png") center / contain no-repeat; image-rendering: pixelated;
+}
+.mock .win-bar:has(> i) > span::after { /* the tab's close mark */
+  content: ""; position: absolute; right: 9px; top: 50%; width: 8px; height: 8px; margin-top: -4px; opacity: .7;
+  background: linear-gradient(45deg, transparent 45%, var(--m-muted) 45% 55%, transparent 55%),
+              linear-gradient(-45deg, transparent 45%, var(--m-muted) 45% 55%, transparent 55%);
+}
+.mock .win-bar:has(> i)::after { align-self: stretch; height: auto; }
+/* Terminal window: Windows Terminal style tab with a prompt glyph instead of the favicon. */
+.mock .win-bar.win-term > span::before {
+  content: ">_"; width: auto; height: auto; background: none; font: 600 10.5px/1 "JetBrains Mono", monospace; color: var(--m-muted);
+}
+
+/* ---- launcher window ---- */
+.mock .win-launcher { container-type: inline-size; }
+.mock .win-launcher .lw-body { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); min-height: 17rem; }
+.mock .lw-side { background: var(--m-chrome); border-right: 1px solid var(--m-border); padding: 10px 8px; display: flex; flex-direction: column; gap: 4px; }
+.mock .lw-side .lw-item {
+  display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: 8px; color: var(--m-muted); font-size: 12.5px; min-width: 0;
+}
+.mock .lw-side .lw-item b { font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mock .lw-side .lw-item.on { background: var(--m-secondary); color: var(--m-text); box-shadow: inset 2px 0 0 var(--brand); }
+.mock .lw-side .tile { width: 22px; height: 22px; border-radius: 6px; flex: none; background: var(--m-art-a); position: relative; overflow: hidden; }
+.mock .lw-side .tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, transparent 50%, rgb(255 241 201 / .35) 50%); }
+.mock .lw-side .tile.t2 { background: #4a6a8a; }
+.mock .lw-side .add { margin-top: auto; border: 1px dashed var(--m-border); justify-content: center; min-height: 2rem; }
+.mock .lw-side .add .lw-add-icon { font-size: 1.25rem; font-weight: 600; line-height: 1; color: var(--m-muted); }
+.mock .lw-side .lw-item .lw-state { display: block; font-size: 11px; color: #f5c77a; margin-top: 2px; }
+.mock .lw-status { color: var(--m-muted); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12.5px; }
+.mock .mods-update-card { display: none; visibility: hidden; flex-direction: column; gap: 8px; font-size: 12.5px; border-color: color-mix(in srgb, var(--brand) 45%, var(--m-border)); }
+.mock .mods-update-card h4 { margin: 0; font-size: 14px; font-weight: 700; }
+.mock .mods-update-card .mods-update-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.mock.mods-scene .launcher-update { flex-direction: column; padding: 8px 10px; background: rgb(19 20 23 / .55); border: 1px solid var(--m-border); border-radius: 10px; }
+.mock.mods-scene .mods-side-busy { display: none; }
+.mock.mods-scene.at-4 .mods-side-idle { display: none; }
+.mock.mods-scene.at-4 .mods-side-busy { display: block; }
+.mock.first-scene .first-side-busy { display: none; }
+.mock.first-scene.at-5 .first-side-busy { display: block; }
+.mock .lw-hero {
+  position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; padding: 18px 20px 18px; min-width: 0; overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 85% 0%, color-mix(in srgb, var(--brand) 22%, transparent), transparent 60%),
+    linear-gradient(180deg, #1f2025 0%, var(--m-window) 70%);
+}
+/* Default server art, as BrandArt.DrawCover paints it: warm radial glow and one large pixel lantern
+   on a 616x608 board, "xMidYMid slice". */
+.mock .lw-art {
+  position: absolute; inset: 0;
+  background: var(--m-cover) center / cover no-repeat;
+  --m-cover: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 616 608' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3CradialGradient id='g' cx='.68' cy='.38' r='.45'%3E%3Cstop offset='0' stop-color='%235a3d16'/%3E%3Cstop offset='.55' stop-color='%232a1f10'/%3E%3Cstop offset='1' stop-color='%2315130f'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='616' height='608' fill='%2315130f'/%3E%3Crect width='616' height='608' fill='url(%23g)'/%3E%3Cg shape-rendering='crispEdges' fill='%238a6a3a'%3E%3Crect x='449' y='150' width='18' height='18'/%3E%3Crect x='431' y='168' width='54' height='18'/%3E%3Crect x='422' y='186' width='72' height='81'/%3E%3Crect x='431' y='267' width='54' height='18'/%3E%3Crect x='431' y='195' width='54' height='63' fill='%23f5b14c'/%3E%3Crect x='449' y='213' width='18' height='27' fill='%23fff1c9'/%3E%3C/g%3E%3C/svg%3E");
+}
+.mock .lw-art::after { /* keep the name and buttons readable over the art */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 35%, rgb(24 25 29 / .55) 65%, var(--m-window) 100%);
+}
+.mock .lw-hero > * { position: relative; }
+.mock .lw-hero .lw-art { position: absolute; }
+.mock .lw-name { font-size: 22px; font-weight: 700; letter-spacing: -.3px; display: flex; align-items: center; gap: 10px; }
+.mock .lw-name img { width: 26px; height: 26px; image-rendering: pixelated; }
+.mock .lw-meta { color: var(--m-muted); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.mock .lw-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.mock .lw-card {
+  position: absolute; top: 14px; right: 14px; width: 11.5rem; padding: 10px 12px; border-radius: 12px;
+  background: rgb(19 20 23 / .72); backdrop-filter: blur(8px); border: 1px solid rgb(255 255 255 / .08); font-size: 12px; color: var(--m-muted);
+}
+.mock .lw-card b { display: block; color: var(--m-text); font-weight: 700; margin-bottom: 2px; }
+@container (max-width: 25rem) {
+  .mock .win-launcher .lw-body { grid-template-columns: minmax(0, 1fr); }
+  .mock .lw-side { display: none; }
+  .mock .lw-card { display: none; }
+}
+
+/* ---- panel window ---- */
+.mock .win-panel .pw-body { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); min-height: 17rem; }
+.mock .pw-side { background: #131417; border-right: 1px solid var(--m-border); padding: 10px 8px; display: flex; flex-direction: column; gap: 2px; font-size: 12.5px; }
+.mock .pw-side .pw-brand { display: flex; align-items: center; gap: 7px; padding: 4px 8px 10px; font-weight: 700; }
+.mock .pw-side .pw-brand img { width: 18px; height: 18px; }
+.mock .pw-side a, .mock .pw-side .pw-item { display: block; padding: 6px 9px; border-radius: 8px; color: var(--m-muted); text-decoration: none; white-space: nowrap; }
+.mock .pw-side .pw-group { padding: 10px 9px 3px; font-size: 10.5px; letter-spacing: .06em; color: #85837d; }
+.mock .pw-side .on { background: var(--m-raised); color: var(--m-text); box-shadow: inset 2px 0 0 var(--brand); }
+.mock .pw-main { padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0; background: #0f1012; }
+.mock .pw-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.mock .pw-head h4 { font-size: 16px; font-weight: 700; }
+.mock .pw-card { background: var(--m-window); border: 1px solid var(--m-border); border-radius: 12px; padding: 12px 14px; }
+@container (max-width: 26rem) { .mock .win-panel .pw-body { grid-template-columns: minmax(0, 1fr); } .mock .pw-side { display: none; } }
+.mock .win-panel { container-type: inline-size; }
+
+/* ---- primitives ---- */
+.mock .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 32px; padding: 0 14px; border-radius: 9px; border: 1px solid var(--m-border);
+  background: var(--m-secondary); color: var(--m-text); font: inherit; font-weight: 600; white-space: nowrap; cursor: default;
+  box-shadow: 0 1px 0 rgb(255 255 255 / .05) inset, 0 2px 6px rgb(0 0 0 / .3);
+}
+.mock .btn.primary {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--brand) 92%, #fff) 0%, var(--brand) 100%); color: var(--brand-ink, var(--brand-text)); border-color: transparent;
+  box-shadow: 0 1px 0 rgb(255 255 255 / .35) inset, 0 4px 18px -2px color-mix(in srgb, var(--brand) 55%, transparent);
+}
+.mock .btn.small { height: 26px; padding: 0 10px; font-size: 12px; border-radius: 7px; }
+
+.mock .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #6b6a66; flex: none; vertical-align: middle; }
+.mock .dot[data-s="on"] { background: var(--m-ok); box-shadow: 0 0 8px 1px rgb(143 220 121 / .6); }
+.mock .dot[data-s="off"] { background: #6b6a66; }
+.mock .dot[data-s="busy"] { background: var(--brand); box-shadow: 0 0 8px 1px color-mix(in srgb, var(--brand) 60%, transparent); animation: m-pulse 1.2s ease-in-out infinite; }
+@keyframes m-pulse { 50% { opacity: .35; } }
+
+.mock .bar { height: 8px; border-radius: 99px; background: #26282e; overflow: hidden; box-shadow: 0 1px 2px rgb(0 0 0 / .4) inset; }
+.mock .bar > i {
+  display: block; height: 100%; width: calc(var(--p) * 100%); border-radius: inherit;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--brand) 70%, #000), var(--brand)); box-shadow: 0 0 10px color-mix(in srgb, var(--brand) 60%, transparent);
+}
+.mock .bar.run > i { animation: m-fill 2.6s cubic-bezier(.3, .6, .3, 1) both; }
+.mock .bar.loop > i { animation: m-fill-loop 5s ease-in-out infinite; }
+@keyframes m-fill { from { --p: 0; } to { --p: 1; } }
+@keyframes m-fill-loop { 0% { --p: .12; } 55% { --p: .8; } 100% { --p: .12; } }
+
+.mock .toast {
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 10px; background: #26282e; border: 1px solid var(--m-border);
+  box-shadow: 0 10px 30px rgb(0 0 0 / .5); font-size: 12.5px; animation: m-toast .55s cubic-bezier(.2, .8, .2, 1) both;
+}
+@keyframes m-toast { from { opacity: 0; transform: translateY(12px) scale(.96); } to { opacity: 1; transform: none; } }
+
+/* click: the pointer glides in from (--cx,--cy) offset to its own position, then a ring spreads */
+.mock .cursor {
+  position: absolute; width: 18px; height: 22px; z-index: 6; pointer-events: none; filter: drop-shadow(0 2px 3px rgb(0 0 0 / .6));
+  background: #fff; clip-path: polygon(0 0, 0 82%, 24% 64%, 40% 100%, 56% 92%, 40% 58%, 72% 58%);
+  animation: m-cursor 1.6s cubic-bezier(.4, 0, .2, 1) both;
+}
+.mock .cursor::after {
+  content: ""; position: absolute; left: -10px; top: -10px; width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--brand);
+  clip-path: none; opacity: 0; animation: m-ring .6s .95s ease-out both;
+}
+@keyframes m-cursor { from { transform: translate(var(--cx, 60px), var(--cy, 50px)); opacity: 0; } 25% { opacity: 1; } 60%, 100% { transform: none; opacity: 1; } }
+@keyframes m-ring { from { opacity: .9; transform: scale(.3); } to { opacity: 0; transform: scale(1.6); } }
+
+/* ---- floating idle motion (hero) ---- */
+.mock .float-a { animation: m-float-a 9s ease-in-out infinite; }
+.mock .float-b { animation: m-float-b 11s ease-in-out infinite; }
+@keyframes m-float-a { 50% { transform: translateY(-9px) rotate(-.25deg); } }
+@keyframes m-float-b { 50% { transform: translateY(10px) rotate(.3deg); } }
+
+/* ---- meters + console (used by hero now, chapter 1 later) ---- */
+.mock .meters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.mock .meter { background: var(--m-window); border: 1px solid var(--m-border); border-radius: 10px; padding: 8px 10px; }
+.mock .meter small { color: var(--m-muted); font-size: 11px; display: flex; justify-content: space-between; margin-bottom: 6px; }
+.mock .console { background: #0b0c0e; border: 1px solid var(--m-border); border-radius: 10px; padding: 8px 10px; font: 11.5px/1.6 "JetBrains Mono", monospace; color: #c9c7c0; overflow: hidden; height: 6.4em; }
+.mock .console .console-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mock .console .t { color: #6f6d68; }
+.mock .console .ok { color: var(--m-ok); }
+.mock .console.idle .console-line { animation: m-line 6s ease-in-out infinite both; }
+.mock .console.idle .console-line:nth-child(2) { animation-delay: .6s; }
+.mock .console.idle .console-line:nth-child(3) { animation-delay: 1.2s; }
+.mock .console.idle .console-line:nth-child(4) { animation-delay: 1.8s; }
+@keyframes m-line { 0%, 8% { opacity: 0; transform: translateY(6px); } 16%, 88% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+
+/* ---- chapter placeholder scene (replaced by the real scenes in the next tasks) ---- */
+.mock .ph-title { font-weight: 700; font-size: 15px; }
+.mock .ph-row { display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--m-border); background: var(--m-window); }
+.mock .ph-row i { width: 20px; height: 20px; border-radius: 6px; background: #2c2e35; display: grid; place-items: center; font-style: normal; font-size: 11px; color: var(--m-muted); flex: none; }
+.mock .ph-row b { height: 8px; border-radius: 4px; background: #2c2e35; flex: 1; max-width: 60%; }
+.mock .ph-row u { height: 8px; width: 18%; border-radius: 4px; background: #23252b; }
+.mock.scene .ph-row { transition: border-color .4s, background .4s, opacity .4s; opacity: .45; }
+.mock.scene.at-1 .ph-row[data-k="1"], .mock.scene.at-2 .ph-row[data-k="2"], .mock.scene.at-3 .ph-row[data-k="3"], .mock.scene.at-4 .ph-row[data-k="4"] {
+  opacity: 1; border-color: color-mix(in srgb, var(--brand) 55%, var(--m-border)); background: color-mix(in srgb, var(--brand) 8%, var(--m-window));
+}
+.mock.scene.at-1 .ph-row[data-k="1"] i, .mock.scene.at-2 .ph-row[data-k="2"] i, .mock.scene.at-3 .ph-row[data-k="3"] i, .mock.scene.at-4 .ph-row[data-k="4"] i {
+  background: var(--brand); color: var(--brand-text); box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 60%, transparent);
+}
+.mock.scene.play.at-1 .ph-row[data-k="1"] i { animation: m-pop .5s both; }
+.mock.scene.play.at-2 .ph-row[data-k="2"] i { animation: m-pop .5s both; }
+.mock.scene.play.at-3 .ph-row[data-k="3"] i { animation: m-pop .5s both; }
+.mock.scene.play.at-4 .ph-row[data-k="4"] i { animation: m-pop .5s both; }
+@keyframes m-pop { from { transform: scale(.5); } 60% { transform: scale(1.25); } to { transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .mock, .mock *, .mock *::before, .mock *::after { animation: none !important; transition: none !important; }
+  .mock .bar > i { --p: 1; }
+}
+
+/* ---- chapter 1: panel easy scene (#ch-easy) ---- */
+.mock .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.mock .easy-main { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.mock .easy-view { display: none; flex-direction: column; gap: 10px; min-height: 0; animation: none; }
+.mock .easy-muted { margin: 0; color: var(--m-muted); font-size: 12.5px; line-height: 1.45; }
+.mock .loaders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.mock .loader-card {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 11px; border-radius: 10px;
+  border: 1px solid var(--m-border); background: #141518; color: var(--m-text); text-align: left; font: inherit; cursor: default;
+}
+.mock .loader-card b { font-weight: 700; font-size: 13px; }
+.mock .loader-card small { color: var(--m-muted); font-size: 12px; }
+.mock .loader-card[aria-pressed="true"], .mock .loader-card.selected {
+  border-color: var(--brand); background: #1f1a12; box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand) 35%, transparent), 0 0 24px -6px color-mix(in srgb, var(--brand) 50%, transparent);
+}
+.mock .easy-field { display: flex; flex-direction: column; gap: 5px; font-size: 12px; color: var(--m-muted); }
+.mock .easy-select {
+  height: 34px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--m-border); background: var(--m-secondary); color: var(--m-text);
+}
+.mock .wizard-go { width: 100%; height: 44px; border-radius: 10px; font-size: 15px; margin-top: 4px; }
+.mock .easy-create-foot { position: relative; margin-top: 2px; }
+.mock .easy-cursor { right: 28%; bottom: 10px; left: auto; top: auto; opacity: 0; pointer-events: none; }
+.mock .easy-install-card { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.mock .easy-install-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 13px; font-weight: 600; }
+.mock .easy-pct { color: var(--m-muted); font-weight: 400; font-size: 12px; }
+.mock .easy-step-label { margin: 0; font-size: 12px; color: var(--m-muted); display: flex; align-items: center; gap: 8px; }
+.mock .easy-console-log { flex: 1; min-height: 9em; height: 100%; }
+.mock .rule-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; opacity: 0; visibility: hidden; }
+.mock .rule-row-head { display: flex; gap: 10px; align-items: flex-start; min-width: 0; }
+.mock .rule-row-head b { display: block; font-size: 14px; margin-bottom: 2px; }
+.mock .rule-row-head small { display: block; font-size: 12px; line-height: 1.4; }
+.mock .rule-toggle { width: 34px; height: 18px; border-radius: 99px; background: var(--m-border); flex: none; position: relative; margin-top: 2px; }
+.mock .rule-toggle.on { background: color-mix(in srgb, var(--brand) 55%, #2a2c32); box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 45%, transparent); }
+.mock .rule-toggle.on::after { content: ""; position: absolute; width: 14px; height: 14px; border-radius: 50%; background: var(--brand); top: 2px; right: 2px; }
+.mock .rule-actions .pill {
+  display: inline-block; padding: 4px 10px; border-radius: 99px; font-size: 11.5px; font-weight: 600;
+  background: color-mix(in srgb, var(--brand) 18%, var(--m-secondary)); color: var(--m-text); border: 1px solid color-mix(in srgb, var(--brand) 40%, var(--m-border));
+}
+.mock .easy-toast { position: relative; align-self: flex-end; margin-top: 10px; opacity: 0; visibility: hidden; pointer-events: none; }
+
+/* step end states (cumulative at-* on the scene) */
+.mock.easy-scene.at-1:not(.at-2) .easy-create { display: flex; }
+.mock.easy-scene.at-2:not(.at-3) .easy-install { display: flex; }
+.mock.easy-scene.at-3:not(.at-4) .easy-console { display: flex; }
+.mock.easy-scene.at-4 .easy-auto { display: flex; }
+.mock.easy-scene.at-3:not(.at-4) .easy-nav-console { background: var(--m-raised); color: var(--m-text); box-shadow: inset 2px 0 0 var(--brand); }
+.mock.easy-scene.at-4 .easy-nav-settings { background: var(--m-raised); color: var(--m-text); box-shadow: inset 2px 0 0 var(--brand); }
+.mock.discord-scene .role-cards-mini { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; font-size: 12px; margin-bottom: 8px; }
+.mock.discord-scene .role-mini { display: flex; flex-direction: column; gap: 4px; }
+.mock.backup-scene .bk-row.hash-row { display: grid; }
+.mock.easy-scene.at-2 .easy-install-bar > i { --p: 1; }
+.mock.easy-scene.at-3 .easy-console .console-line { opacity: 1; transform: none; }
+.mock.easy-scene.at-4 .rule-row { opacity: 1; visibility: visible; }
+.mock.easy-scene.at-4 .easy-toast { opacity: 1; visibility: visible; transform: none; }
+
+/* crossfade when switching views */
+.mock.easy-scene .easy-view { animation: m-easy-in .45s ease both; }
+@keyframes m-easy-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* motion when .play (original scene gets .play on load; clones on scroll into view) */
+@media (prefers-reduced-motion: no-preference) {
+  .mock.easy-scene.play.at-1:not(.at-2) .easy-cursor { opacity: 1; animation: m-cursor 1.6s cubic-bezier(.4, 0, .2, 1) both; }
+  .mock.easy-scene.play.at-1:not(.at-2) .easy-create-btn { box-shadow: 0 1px 0 rgb(255 255 255 / .35) inset, 0 4px 22px -2px color-mix(in srgb, var(--brand) 65%, transparent); }
+  .mock.easy-scene.play.at-2:not(.at-3) .easy-install-bar.run > i { --p: 0; animation: m-fill 2.8s cubic-bezier(.3, .6, .3, 1) both; }
+  .mock.easy-scene.play.at-2:not(.at-3) .easy-pct { animation: m-easy-pct 2.8s linear both; }
+  .mock.easy-scene.play.at-3:not(.at-4) .easy-console-log .console-line { opacity: 0; animation: m-easy-line .55s ease both; }
+  .mock.easy-scene.play.at-3:not(.at-4) .easy-console-log .console-line:nth-child(1) { animation-delay: .15s; }
+  .mock.easy-scene.play.at-3:not(.at-4) .easy-console-log .console-line:nth-child(2) { animation-delay: .55s; }
+  .mock.easy-scene.play.at-3:not(.at-4) .easy-console-log .console-line:nth-child(3) { animation-delay: .95s; }
+  .mock.easy-scene.play.at-3:not(.at-4) .easy-console-log .console-line:nth-child(4) { animation-delay: 1.35s; }
+  .mock.easy-scene.play.at-3:not(.at-4) .easy-tps { animation: m-easy-tps 3.2s ease-in-out infinite; }
+  .mock.easy-scene.play.at-3:not(.at-4) .easy-cpu { animation: m-easy-cpu 2.4s ease-in-out infinite; }
+  .mock.easy-scene.play.at-3:not(.at-4) .easy-mem { animation: m-easy-mem 3.6s ease-in-out infinite; }
+  .mock.easy-scene.play.at-4 .rule-row { animation: m-easy-in .5s .1s both; }
+  .mock.easy-scene.play.at-4 .easy-toast { animation: m-toast .55s .65s cubic-bezier(.2, .8, .2, 1) both; visibility: visible; }
+}
+@keyframes m-easy-pct { from { opacity: .4; } 90%, 100% { opacity: 1; } }
+@keyframes m-easy-line { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+@keyframes m-easy-tps { 50% { opacity: .55; } }
+@keyframes m-easy-cpu { 0%, 100% { opacity: 1; } 50% { opacity: .65; } }
+@keyframes m-easy-mem { 40% { opacity: .7; } }
+
+.mock.easy-scene .win-panel .pw-body { max-height: min(58vh, 26rem); }
+.mock.easy-scene .pw-main { overflow-y: auto; }
+@container (max-width: 26rem) {
+  .mock.easy-scene .loaders { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---- chapter 2: branding (#ch-brand) ---- */
+.mock.brand-scene [data-brand-scope] { --brand: #f5b14c; --brand-ink: #241703; --brand-bg-dim: .42; }
+.mock.brand-scene.at-2 [data-brand-scope] { --brand: #6cb6f0; --brand-ink: #152535; }
+.mock.brand-scene .brand-stage {
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 10px; width: 100%; max-height: 100%; min-width: 0; align-items: stretch;
+}
+.mock.brand-scene .brand-stage > .win { width: 100%; max-height: min(58vh, 26rem); font-size: 11.5px; }
+.mock.brand-scene .win-launcher .lw-body { min-height: 14rem; }
+.mock.brand-scene .win-launcher .lw-name { font-size: 18px; }
+.mock.brand-scene .win-launcher .lw-name b { font-weight: 700; }
+.mock.brand-scene .brand-mark {
+  width: 26px; height: 26px; border-radius: 6px; flex: none; image-rendering: pixelated; position: relative; overflow: hidden;
+}
+/* Default logo: the Lantern pixel mark (BrandArt.Mark). Uploaded logo: a pixel gem on blue. */
+.mock.brand-scene .brand-logo-default {
+  background: #15130f url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges' fill='%238a6a3a'%3E%3Crect x='7' y='0' width='2' height='2'/%3E%3Crect x='5' y='2' width='6' height='2'/%3E%3Crect x='4' y='4' width='8' height='9'/%3E%3Crect x='5' y='13' width='6' height='2'/%3E%3Crect x='5' y='5' width='6' height='7' fill='%23f5b14c'/%3E%3Crect x='7' y='7' width='2' height='3' fill='%23fff1c9'/%3E%3C/svg%3E") center / 80% no-repeat;
+}
+.mock.brand-scene .brand-logo-alt {
+  display: none;
+  background: #12202c url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges' fill='%236cb6f0'%3E%3Crect x='7' y='2' width='2' height='1'/%3E%3Crect x='6' y='3' width='4' height='1'/%3E%3Crect x='5' y='4' width='6' height='1'/%3E%3Crect x='3' y='5' width='10' height='3'/%3E%3Crect x='4' y='8' width='8' height='1'/%3E%3Crect x='5' y='9' width='6' height='1'/%3E%3Crect x='6' y='10' width='4' height='1'/%3E%3Crect x='7' y='11' width='2' height='2'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%23d8f0ff'/%3E%3C/svg%3E") center / 80% no-repeat;
+}
+/* In the hero the uploaded logo becomes the cover art: blue glow, the same gem large. */
+.mock.brand-scene .lw-art.brand-logo-alt {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 616 608' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3CradialGradient id='g' cx='.68' cy='.38' r='.45'%3E%3Cstop offset='0' stop-color='%231d4a6a'/%3E%3Cstop offset='.55' stop-color='%2312263a'/%3E%3Cstop offset='1' stop-color='%230f1418'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='616' height='608' fill='%230f1418'/%3E%3Crect width='616' height='608' fill='url(%23g)'/%3E%3Cg transform='translate(386 132) scale(9)' shape-rendering='crispEdges' fill='%236cb6f0'%3E%3Crect x='7' y='2' width='2' height='1'/%3E%3Crect x='6' y='3' width='4' height='1'/%3E%3Crect x='5' y='4' width='6' height='1'/%3E%3Crect x='3' y='5' width='10' height='3'/%3E%3Crect x='4' y='8' width='8' height='1'/%3E%3Crect x='5' y='9' width='6' height='1'/%3E%3Crect x='6' y='10' width='4' height='1'/%3E%3Crect x='7' y='11' width='2' height='2'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%23d8f0ff'/%3E%3C/g%3E%3C/svg%3E") center / cover no-repeat;
+}
+.mock.brand-scene.at-2 .brand-logo-default { display: none; }
+.mock.brand-scene.at-2 .brand-logo-alt { display: block; }
+.mock.brand-scene .lw-art.brand-logo-default { display: block; }
+.mock.brand-scene .lw-art.brand-logo-alt { display: none; }
+.mock.brand-scene.at-2 .lw-art.brand-logo-default { display: none; }
+.mock.brand-scene.at-2 .lw-art.brand-logo-alt { display: block; position: absolute; inset: 0; }
+.mock.brand-scene .lw-art.brand-logo-default { background: var(--m-cover) center / cover no-repeat; }
+.mock.brand-scene .lw-name .brand-logo-alt { display: none; }
+.mock.brand-scene.at-2 .lw-name .brand-logo-default { display: none; }
+.mock.brand-scene.at-2 .lw-name .brand-logo-alt { display: block; }
+.mock.brand-scene .brand-tile { position: relative; overflow: hidden; }
+.mock.brand-scene .brand-tile i { position: absolute; inset: 0; border-radius: inherit; }
+.mock.brand-scene .brand-tile .brand-logo-alt { display: none; }
+.mock.brand-scene.at-2 .brand-tile .brand-logo-default { display: none; }
+.mock.brand-scene.at-2 .brand-tile .brand-logo-alt { display: block; }
+.mock.brand-scene .brand-bg {
+  display: none; visibility: hidden; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgb(15 16 18 / .55) 0%, rgb(15 16 18 / .35) 55%, transparent 100%),
+    linear-gradient(180deg, #1a2840 0%, #243858 42%, #3a5a48 68%, #4a6840 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 15%, transparent 95%); mask-image: linear-gradient(180deg, #000 15%, transparent 95%);
+}
+.mock.brand-scene .brand-bg::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 32%;
+  background:
+    repeating-linear-gradient(90deg, #5a4030 0 16px, #6a5038 16px 32px) 0 100% / 100% 18px no-repeat,
+    repeating-linear-gradient(90deg, #3a6838 0 12px, #4a7848 12px 24px) 0 calc(100% - 18px) / 100% 14px no-repeat;
+  image-rendering: pixelated; opacity: .95;
+}
+.mock.brand-scene.at-3 .brand-bg { display: block; visibility: visible; }
+.mock.brand-scene .brand-panel-main { gap: 8px; font-size: 11.5px; overflow: hidden; }
+.mock.brand-scene .brand-field { display: flex; flex-direction: column; gap: 4px; color: var(--m-muted); font-size: 11px; }
+.mock.brand-scene .brand-input {
+  height: 30px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--m-border); background: var(--m-secondary); color: var(--m-text); display: flex; align-items: center;
+}
+.mock.brand-scene .brand-logo-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.mock.brand-scene .brand-logo-preview {
+  width: 36px; height: 36px; border-radius: 10px; border: 1px dashed var(--m-border); flex: none;
+}
+.mock.brand-scene .brand-logo-preview.brand-logo-alt { display: none; }
+.mock.brand-scene.at-2 .brand-logo-preview.brand-logo-default { display: none; }
+.mock.brand-scene.at-2 .brand-logo-preview.brand-logo-alt { display: block; }
+.mock.brand-scene .brand-accent-dots { display: flex; gap: 6px; align-items: center; }
+.mock.brand-scene .brand-accent-dots i { width: 18px; height: 18px; border-radius: 50%; flex: none; border: 2px solid transparent; }
+.mock.brand-scene .brand-accent-dots i.on { border-color: var(--m-text); box-shadow: 0 0 0 2px var(--m-window) inset; }
+.mock.brand-scene:not(.at-2) .brand-accent-dots i.on { background: #f5b14c !important; }
+.mock.brand-scene.at-2 .brand-accent-dots i.on { background: #6cb6f0 !important; }
+.mock.brand-scene .brand-preview-card { margin-top: 4px; padding: 8px; border-radius: 10px; border: 1px solid var(--m-border); background: var(--m-window); }
+.mock.brand-scene .brand-preview-card small { color: var(--m-muted); font-size: 10px; display: block; margin-bottom: 6px; }
+.mock.brand-scene .brand-preview-hero {
+  position: relative; border-radius: 8px; overflow: hidden; min-height: 5.5rem; padding: 10px; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 6px;
+  background: linear-gradient(180deg, #1f2025, var(--m-window));
+}
+.mock.brand-scene .brand-preview-art {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.mock.brand-scene .brand-preview-art.brand-logo-alt { display: none; }
+.mock.brand-scene.at-2 .brand-preview-art.brand-logo-default { display: none; }
+.mock.brand-scene.at-2 .brand-preview-art.brand-logo-alt { display: block; }
+.mock.brand-scene .brand-preview-bg { display: none; visibility: hidden; inset: 0; z-index: 0; }
+.mock.brand-scene.at-3 .brand-preview-bg { display: block; visibility: visible; }
+.mock.brand-scene .brand-preview-hero > b, .mock.brand-scene .brand-preview-hero > .btn { position: relative; z-index: 1; }
+.mock.brand-scene .lw-name { display: flex; align-items: center; gap: 10px; }
+.mock.brand-scene .brand-nav.on { background: var(--m-raised); color: var(--m-text); box-shadow: inset 2px 0 0 var(--brand); }
+.mock.brand-scene .win-panel .pw-body { max-height: min(58vh, 26rem); min-height: 0; }
+.mock.brand-scene .brand-panel-main { max-height: 100%; overflow-y: auto; }
+@container (max-width: 28rem) {
+  .mock.brand-scene .brand-stage { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 51.999rem) {
+  .mock.brand-scene .brand-stage { grid-template-columns: minmax(0, 1fr); }
+  .mock.brand-scene .brand-stage > .win { max-height: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mock.brand-scene.play.at-2:not(.at-3) .brand-accent-dots i.on { animation: m-pop .45s both; }
+  .mock.brand-scene.play.at-3 .brand-bg { animation: m-brand-bg-in .7s ease both; }
+}
+@keyframes m-brand-bg-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---- chapter 3: Discord (#ch-discord) ---- */
+.mock .discord-muted, .mock .mods-muted, .mock .backup-muted { margin: 0; color: var(--m-muted); font-size: 12px; line-height: 1.45; }
+.mock.discord-scene .discord-stage { width: 100%; max-height: 100%; min-width: 0; display: grid; place-items: center; }
+.mock.discord-scene .discord-panel { width: 100%; max-height: min(58vh, 26rem); }
+.mock.discord-scene .discord-main { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.mock.discord-scene .discord-view { display: none; flex-direction: column; gap: 10px; min-height: 0; animation: m-easy-in .45s ease both; }
+.mock.discord-scene .perm-table { padding: 0; overflow: hidden; font-size: 11.5px; }
+.mock.discord-scene .perm-row { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(4, 2.4rem); gap: 4px; align-items: center; border-top: 1px solid var(--m-border); }
+.mock.discord-scene .perm-row.perm-head { border-top: 0; background: #141518; color: var(--m-muted); font-size: 11px; padding: 8px 10px; }
+.mock.discord-scene .perm-row:not(.perm-head) { padding: 5px 10px; }
+.mock.discord-scene .perm-row .pill { font-size: 10px; padding: 2px 6px; border-radius: 99px; justify-self: center; text-align: center; }
+.mock.discord-scene .pill.admin { background: #3a2a14; color: #f5b14c; }
+.mock.discord-scene .pill.operator { background: #1a2838; color: #6cb6f0; }
+.mock.discord-scene .pill.player { background: #1a3020; color: #8fdc79; }
+.mock.discord-scene .pill.guest { background: #26282e; color: var(--m-muted); }
+.mock.discord-scene .chk { width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--m-border); justify-self: center; }
+.mock.discord-scene .chk.on { background: color-mix(in srgb, var(--brand) 35%, var(--m-secondary)); border-color: var(--brand); box-shadow: 0 0 10px color-mix(in srgb, var(--brand) 40%, transparent); }
+.mock.discord-scene .role-map-row { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 11.5px; }
+.mock.discord-scene .role-chip { display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 99px; background: var(--m-secondary); border: 1px solid var(--m-border); }
+.mock.discord-scene .role-chip.muted { opacity: .65; }
+.mock.discord-scene .dot-role { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.mock.discord-scene .dot-role.owner { background: #e85d5d; }
+.mock.discord-scene .dot-role.mod { background: #6cb6f0; }
+.mock.discord-scene .dot-role.member { background: #8fdc79; }
+.mock.discord-scene .arrow { color: var(--m-muted); font-size: 10px; }
+.mock.discord-scene .req-card { display: flex; flex-direction: column; gap: 10px; border-color: color-mix(in srgb, var(--brand) 35%, var(--m-border)); }
+.mock.discord-scene .req-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.mock.discord-scene .req-head b { font-size: 13px; }
+.mock.discord-scene .req-body { margin: 0; font-size: 13px; }
+.mock.discord-scene .req-actions { position: relative; display: flex; gap: 8px; align-items: center; }
+.mock.discord-scene .pill.warn { background: #3a2810; color: var(--brand); font-size: 11px; padding: 3px 8px; border-radius: 99px; }
+.mock.discord-scene .pill.ok { display: none; background: #1a3020; color: var(--m-ok); font-size: 11px; padding: 3px 8px; border-radius: 99px; }
+.mock.discord-scene .discord-cursor { right: 18%; bottom: 2px; left: auto; top: auto; opacity: 0; visibility: hidden; }
+.mock.discord-scene .discord-finale { display: none; visibility: hidden; width: 100%; max-height: min(58vh, 26rem); grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 10px; align-items: center; min-width: 0; }
+.mock.discord-scene .dm-card {
+  display: none; visibility: hidden; flex: 0 0 auto; align-self: center; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 12px;
+  background: #1a1b1f; border: 1px solid #2f3138; box-shadow: 0 12px 32px rgb(0 0 0 / .45); width: 100%; max-width: 100%;
+}
+.mock.discord-scene .dm-head { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--m-muted); }
+.mock.discord-scene .dm-head b { color: var(--m-text); font-size: 13px; }
+.mock.discord-scene .dm-head small { margin-left: auto; }
+.mock.discord-scene .dm-avatar { width: 28px; height: 28px; border-radius: 50%; flex: none; image-rendering: pixelated; object-fit: cover; }
+.mock.discord-scene .dm-text { margin: 0; font-size: 13px; line-height: 1.5; padding: 8px 10px; border-radius: 8px; background: #23252b; }
+.mock.discord-scene .discord-launcher { max-height: min(58vh, 26rem); min-height: 0; font-size: 11.5px; align-self: center; }
+.mock.discord-scene .discord-launcher .lw-body { min-height: 0; }
+.mock.discord-scene .discord-play.on { box-shadow: 0 1px 0 rgb(255 255 255 / .35) inset, 0 4px 22px -2px color-mix(in srgb, var(--brand) 65%, transparent); }
+.mock.discord-scene .discord-launch-note { margin: 0; font-size: 12px; color: var(--m-muted); display: none; visibility: hidden; }
+.mock.discord-scene.at-1:not(.at-2) .discord-roles { display: flex; }
+.mock.discord-scene.at-1:not(.at-2) .discord-nav-roles { background: var(--m-raised); color: var(--m-text); box-shadow: inset 2px 0 0 var(--brand); }
+.mock.discord-scene.at-2:not(.at-3) .discord-wl { display: flex; }
+/* one sidebar item selected at a time: roles at step 1, players from step 2 on */
+.mock.discord-scene.at-2 .discord-nav-players { background: var(--m-raised); color: var(--m-text); box-shadow: inset 2px 0 0 var(--brand); }
+.mock.discord-scene.at-3:not(.at-4) .discord-wl { display: flex; }
+.mock.discord-scene.at-3:not(.at-4) .pill.warn { display: none; }
+.mock.discord-scene.at-3:not(.at-4) .pill.ok { display: inline-block; }
+.mock.discord-scene.at-3:not(.at-4) .req-actions .btn { pointer-events: none; opacity: .55; }
+.mock.discord-scene.at-3:not(.at-4) .discord-approve { opacity: 1; box-shadow: 0 0 16px color-mix(in srgb, var(--brand) 50%, transparent); }
+.mock.discord-scene.at-4 .discord-panel { display: none; visibility: hidden; }
+.mock.discord-scene.at-4 .discord-finale { display: grid; visibility: visible; }
+.mock.discord-scene.at-4 .dm-card { display: flex; visibility: visible; }
+.mock.discord-scene.at-4 .discord-launch-note { display: block; visibility: visible; }
+@media (prefers-reduced-motion: no-preference) {
+  .mock.discord-scene.play.at-3:not(.at-4) .discord-cursor { opacity: 1; visibility: visible; animation: m-cursor 1.6s cubic-bezier(.4, 0, .2, 1) both; }
+  .mock.discord-scene.play.at-4 .discord-play { animation: m-pop .5s .2s both; }
+}
+@container (max-width: 28rem) {
+  .mock.discord-scene.at-4 .discord-finale { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---- chapter 4: mods (#ch-mods) ---- */
+.mock.mods-scene .mods-stage { width: 100%; max-height: 100%; min-width: 0; display: grid; place-items: center; }
+.mock.mods-scene .mods-panel, .mock.mods-scene .mods-launcher, .mock.mods-scene .mods-home { width: 100%; max-height: min(58vh, 26rem); display: none; visibility: hidden; }
+.mock.mods-scene .mods-table { padding: 0; overflow: hidden; font-size: 12px; }
+.mock.mods-scene .mods-row { display: grid; grid-template-columns: minmax(0, 1.2fr) 5rem 4.5rem; gap: 8px; padding: 8px 12px; border-top: 1px solid var(--m-border); align-items: center; }
+.mock.mods-scene .mods-row.head { border-top: 0; color: var(--m-muted); font-size: 11px; background: #141518; }
+.mock.mods-scene .mods-row.mods-new { display: none; visibility: hidden; background: color-mix(in srgb, var(--brand) 8%, var(--m-window)); }
+.mock.mods-scene .mods-upload-foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.mock.mods-scene .mods-upload-tag { display: none; visibility: hidden; font-size: 12px; color: var(--brand); }
+.mock.mods-scene .launcher-update { display: none; visibility: hidden; gap: 10px; align-items: flex-start; font-size: 12.5px; border-color: color-mix(in srgb, var(--brand) 45%, var(--m-border)); box-shadow: 0 0 24px -8px color-mix(in srgb, var(--brand) 55%, transparent); }
+.mock.mods-scene .launcher-update p { margin: 0; font-weight: 600; line-height: 1.45; }
+.mock.mods-scene .mods-progress, .mock.mods-scene .mods-launch { display: none; visibility: hidden; flex-direction: column; gap: 8px; }
+.mock.mods-scene .mods-launcher .lw-hero { gap: 10px; }
+.mock.mods-scene .mods-launcher .lw-body { min-height: 14rem; }
+.mock.mods-scene .mods-lw-actions { display: none; visibility: hidden; }
+.mock.mods-scene.at-2:not(.at-3) .mods-update-card { display: flex; visibility: visible; }
+.mock.mods-scene.at-2:not(.at-3) .mods-lw-actions { display: none !important; visibility: hidden !important; }
+.mock.mods-scene.at-2:not(.at-3) .mods-progress, .mock.mods-scene.at-2:not(.at-3) .mods-launch { display: none !important; visibility: hidden !important; }
+.mock.mods-scene .mods-cursor { right: 22%; bottom: 6px; left: auto; top: auto; opacity: 0; visibility: hidden; }
+.mock.mods-scene .ph-home { display: flex; flex-direction: column; gap: 12px; padding: 4px 2px; min-width: 0; }
+.mock.mods-scene .ph-hero { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 15px; }
+.mock.mods-scene .ph-launcher-card b { display: block; margin-bottom: 6px; }
+.mock.mods-scene .ph-launch-row { position: relative; display: inline-flex; }
+.mock.mods-scene .mods-home-body { padding: 16px 18px; background: linear-gradient(180deg, #121316, #0f1012); }
+.mock.mods-scene.at-1:not(.at-2) .mods-panel { display: block; visibility: visible; }
+.mock.mods-scene.at-1:not(.at-2) .mods-row.mods-new { display: grid; visibility: visible; }
+.mock.mods-scene.at-1:not(.at-2) .mods-upload-tag { display: inline; visibility: visible; }
+.mock.mods-scene.at-2:not(.at-3) .mods-launcher { display: block; visibility: visible; }
+.mock.mods-scene.at-2:not(.at-3) .launcher-update { display: flex; visibility: visible; }
+.mock.mods-scene.at-3:not(.at-4) .mods-home { display: block; visibility: visible; }
+.mock.mods-scene.at-4 .mods-launcher { display: block; visibility: visible; }
+.mock.mods-scene.at-4 .launcher-update { display: none; visibility: hidden; }
+.mock.mods-scene.at-4 .mods-progress { display: flex; visibility: visible; }
+.mock.mods-scene.at-4 .mods-launch { display: flex; visibility: visible; }
+.mock.mods-scene.at-4 .mods-lw-actions, .mock.mods-scene.at-4 .launcher-update { display: none !important; visibility: hidden !important; }
+.mock.mods-scene.at-4 .mods-install-bar > i { --p: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .mock.mods-scene.play.at-3:not(.at-4) .mods-cursor { opacity: 1; visibility: visible; animation: m-cursor 1.6s cubic-bezier(.4, 0, .2, 1) both; }
+  .mock.mods-scene.play.at-4 .mods-install-bar.run > i { --p: 0; animation: m-fill 2.4s cubic-bezier(.3, .6, .3, 1) both; }
+  .mock.mods-scene.play.at-4 .mods-launch { animation: m-easy-in .5s 2.2s both; }
+}
+
+/* ---- chapter 5: backup (#ch-backup) ---- */
+.mock.backup-scene .win-panel { width: 100%; max-height: min(58vh, 26rem); }
+.mock.backup-scene .backup-main { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.mock.backup-scene .backup-view { display: none; flex-direction: column; gap: 10px; min-height: 0; animation: m-easy-in .45s ease both; }
+.mock.backup-scene .bk-timeline { display: flex; gap: 8px; margin: 10px 0 8px; flex-wrap: wrap; }
+.mock.backup-scene .bk-slot { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; min-width: 4.5rem; padding: 8px 6px; border-radius: 10px; border: 1px solid var(--m-border); background: var(--m-secondary); font-size: 10.5px; color: var(--m-muted); }
+.mock.backup-scene .bk-slot i { width: 10px; height: 10px; border-radius: 50%; background: var(--m-border); }
+.mock.backup-scene .bk-slot.done i { background: var(--m-ok); box-shadow: 0 0 8px rgb(143 220 121 / .5); }
+.mock.backup-scene .bk-slot.next { border-color: color-mix(in srgb, var(--brand) 50%, var(--m-border)); color: var(--m-text); box-shadow: 0 0 18px -6px color-mix(in srgb, var(--brand) 45%, transparent); }
+.mock.backup-scene .bk-slot.next i { background: var(--brand); animation: m-pulse 1.2s ease-in-out infinite; }
+.mock.backup-scene .bk-table { padding: 0; overflow: hidden; font-size: 12px; }
+.mock.backup-scene .bk-row { display: grid; grid-template-columns: minmax(0, 1.1fr) 4.5rem 3.5rem; gap: 8px; padding: 8px 12px; border-top: 1px solid var(--m-border); align-items: center; }
+.mock.backup-scene .bk-row.head { border-top: 0; color: var(--m-muted); font-size: 11px; background: #141518; }
+.mock.backup-scene .bk-row.picked { background: color-mix(in srgb, var(--brand) 10%, var(--m-window)); box-shadow: inset 2px 0 0 var(--brand); }
+.mock.backup-scene .restore-dlg { display: flex; flex-direction: column; gap: 10px; border-color: color-mix(in srgb, var(--brand) 40%, var(--m-border)); }
+.mock.backup-scene .restore-confirm-row { position: relative; display: inline-flex; }
+.mock.backup-scene .backup-cursor { right: 20%; bottom: 4px; left: auto; top: auto; opacity: 0; visibility: hidden; }
+.mock.backup-scene .bk-table .hash-row { display: none; visibility: hidden; }
+.mock.backup-scene .hash-row[data-s="ok"] .hash-pass { color: var(--m-ok); font-weight: 700; font-size: 11px; }
+.mock.backup-scene .backup-done-foot { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.mock.backup-scene .bk-row.picked.restored { background: color-mix(in srgb, var(--m-ok) 12%, var(--m-window)); box-shadow: inset 2px 0 0 var(--m-ok); }
+.mock.backup-scene .restore-done { display: none; visibility: hidden; align-self: flex-start; margin-top: 0; opacity: 0; pointer-events: none; position: relative; z-index: 2; }
+.mock.backup-scene.at-4 .backup-main { overflow: auto; }
+.mock.backup-scene.at-4 .backup-done { gap: 8px; }
+.mock.backup-scene.at-1:not(.at-2) .backup-sched { display: flex; }
+.mock.backup-scene.at-2:not(.at-3) .backup-list { display: flex; }
+.mock.backup-scene.at-3:not(.at-4) .backup-restore { display: flex; }
+.mock.backup-scene.at-4 .backup-done { display: flex; }
+.mock.backup-scene.at-4 .bk-table .hash-row { display: grid; visibility: visible; }
+.mock.backup-scene.at-4 .hash-row[data-s="ok"] { border-color: color-mix(in srgb, var(--m-ok) 45%, var(--m-border)); }
+.mock.backup-scene.at-4 .restore-done { display: inline-flex; visibility: visible; opacity: 1; transform: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .mock.backup-scene.play.at-3:not(.at-4) .backup-cursor { opacity: 1; visibility: visible; animation: m-cursor 1.6s cubic-bezier(.4, 0, .2, 1) both; }
+  .mock.backup-scene.play.at-4 .restore-done { animation: m-toast .55s .35s cubic-bezier(.2, .8, .2, 1) both; visibility: visible; }
+}
+
+/* ---- launcher page: first run (#ch-first) ---- */
+.mock .launcher-dlg {
+  display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border-radius: 12px; background: var(--m-window);
+  border: 1px solid var(--m-border); box-shadow: 0 20px 50px rgb(0 0 0 / .55);
+}
+.mock .launcher-dlg h4 { font-size: 15px; font-weight: 700; margin: 0; }
+.mock .launcher-dlg-foot { margin: 0; font-size: 11.5px; color: var(--m-muted); line-height: 1.45; }
+.mock .launcher-dlg-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+
+.mock.first-scene .first-stage { width: 100%; max-height: 100%; min-width: 0; display: grid; place-items: center; }
+.mock.first-scene .first-onb, .mock.first-scene .first-connect, .mock.first-scene .first-main { width: 100%; max-height: min(58vh, 26rem); display: none; visibility: hidden; }
+.mock.first-scene .onb-pane {
+  padding: 20px 22px 18px; min-height: 14rem; background: #121316;
+  background-image: radial-gradient(80% 70% at 50% 0%, rgb(245 177 76 / .12), transparent 65%);
+}
+.mock.first-scene .onb-head { margin-bottom: 14px; }
+.mock.first-scene .onb-head h4 { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+.mock.first-scene .onb-head p { margin: 0; color: var(--m-muted); font-size: 12.5px; line-height: 1.45; }
+.mock.first-scene .onb-card {
+  padding: 12px 14px; border-radius: 12px; background: var(--m-secondary); border: 1px solid var(--m-border); font-size: 13px;
+}
+.mock.first-scene .onb-card.ok { border-color: color-mix(in srgb, var(--m-ok) 45%, var(--m-border)); box-shadow: 0 0 20px -8px rgb(143 220 121 / .35); }
+.mock.first-scene .onb-bullets { margin: 12px 0 0; padding: 0 0 0 1rem; color: var(--m-muted); font-size: 12px; line-height: 1.55; }
+.mock.first-scene .onb-bullets li + li { margin-top: 6px; }
+.mock.first-scene .onb-profile {
+  display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 12px; background: var(--m-secondary); border: 1px solid var(--m-border);
+}
+.mock.first-scene .onb-profile i { width: 36px; height: 36px; border-radius: 50%; background: #1a3020; box-shadow: inset 0 0 0 2px rgb(143 220 121 / .45); flex: none; }
+.mock.first-scene .onb-foot { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; justify-content: flex-end; }
+.mock.first-scene .first-view { display: none; visibility: hidden; flex-direction: column; gap: 10px; animation: m-easy-in .45s ease both; }
+.mock.first-scene .first-connect {
+  display: none; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 10px; align-items: center; min-width: 0;
+}
+.mock.first-scene .first-connect-panel .pw-main { padding: 14px 16px; gap: 10px; }
+.mock.first-scene .first-connect-steps { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 12px; color: var(--m-muted); }
+.mock.first-scene .first-connect-steps li { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.mock.first-scene .first-connect-steps .chip {
+  display: inline-flex; padding: 3px 8px; border-radius: 99px; background: color-mix(in srgb, var(--brand) 22%, var(--m-secondary));
+  border: 1px solid color-mix(in srgb, var(--brand) 45%, var(--m-border)); color: var(--m-text); font-weight: 600; font-size: 11.5px;
+}
+.mock.first-scene .first-join-row { position: relative; display: inline-flex; margin-top: 6px; }
+.mock.first-scene .first-cursor { right: 18%; bottom: 2px; left: auto; top: auto; opacity: 0; visibility: hidden; }
+.mock.first-scene .first-connect-launcher { align-self: center; padding: 16px; background: #121316; min-height: 0; }
+.mock.first-scene .first-connect-launcher .win-bar { background: #131417; }
+.mock.first-scene .first-main .lw-body { min-height: 14rem; }
+.mock.first-scene .first-install, .mock.first-scene .first-launch { display: none; visibility: hidden; flex-direction: column; gap: 8px; }
+.mock.first-scene.at-1:not(.at-2) .first-onb { display: block; visibility: visible; }
+.mock.first-scene.at-1:not(.at-2) .first-cf { display: flex; visibility: visible; }
+.mock.first-scene.at-2:not(.at-3) .first-onb { display: block; visibility: visible; }
+.mock.first-scene.at-2:not(.at-3) .first-cf { display: none; visibility: hidden; }
+.mock.first-scene.at-2:not(.at-3) .first-login { display: flex; visibility: visible; }
+.mock.first-scene.at-3:not(.at-4) .first-connect { display: grid; visibility: visible; }
+.mock.first-scene.at-4:not(.at-5) .first-main { display: block; visibility: visible; }
+.mock.first-scene.at-4:not(.at-5) .first-install { display: flex; visibility: visible; }
+.mock.first-scene.at-5 .first-main { display: block; visibility: visible; }
+.mock.first-scene.at-5 .first-install { display: none; visibility: hidden; }
+.mock.first-scene.at-5 .first-launch { display: flex; visibility: visible; }
+.mock.first-scene.at-4:not(.at-5) .first-install-bar > i { --p: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .mock.first-scene.play.at-3:not(.at-4) .first-cursor { opacity: 1; visibility: visible; animation: m-cursor 1.6s cubic-bezier(.4, 0, .2, 1) both; }
+  .mock.first-scene.play.at-4:not(.at-5) .first-install-bar.run > i { --p: 0; animation: m-fill 2.6s cubic-bezier(.3, .6, .3, 1) both; }
+  .mock.first-scene.play.at-5 .first-launch { animation: m-easy-in .5s .15s both; }
+  .mock.first-scene.play.at-5 .first-play.on { animation: m-pop .5s .25s both; }
+}
+@container (max-width: 28rem) {
+  .mock.first-scene.at-3:not(.at-4) .first-connect { grid-template-columns: minmax(0, 1fr); }
+}
+.mock.brand-scene.at-3 .brand-preview-art { display: none !important; }
+/* Step 3: an uploaded background replaces the cover art in the launcher and the preview. */
+.mock.brand-scene.at-3 .lw-art { display: none !important; }
+.mock.brand-scene .brand-bg {
+  background:
+    radial-gradient(circle at 72% 58%, rgb(255 214 150 / .9) 0 5%, rgb(255 190 120 / .35) 6%, transparent 22%),
+    linear-gradient(180deg, #1c2f52 0%, #3d6596 38%, #c98f6a 66%, #e8b47e 70%);
+  -webkit-mask-image: none; mask-image: none;
+}
+.mock.brand-scene .brand-bg::after { /* keep the name and buttons readable */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgb(24 25 29 / .5) 62%, rgb(24 25 29 / .92) 100%);
+}
