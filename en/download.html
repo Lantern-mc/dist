@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#0b0c0e">
 <link rel="icon" href="../assets/img/favicon.ico">
 <link rel="stylesheet" href="../assets/v2/site.css">
+<link rel="stylesheet" href="../assets/v2/mock.css">
 <link rel="alternate" hreflang="ko" href="../download">
 <link rel="alternate" hreflang="en" href="download">
 <script src="../assets/releases.js" defer></script>
@@ -23,13 +24,57 @@
   </div>
 </header>
 <main id="main" class="dl-main">
-<section class="ops-section wrap dl-page" aria-labelledby="dl-title">
-  <h1 id="dl-title">Get the launcher</h1>
-  <p class="lead">For Windows 10 and 11. It installs without administrator rights, and once installed the launcher fetches new versions on its own. New here? Read the <a href="https://github.com/Lantern-mc/dist/wiki/설치">install guide</a> too.</p>
-  <div id="releases" class="dl-releases" aria-live="polite">
-    <p class="dl-loading">Loading versions…</p>
-    <noscript><article class="dl-latest dl-fallback"><div class="dl-latest-main"><div class="actions"><a class="btn" href="https://github.com/Lantern-mc/dist/releases/latest/download/LanternLauncher.exe">Download LanternLauncher.exe</a></div><p class="dl-sub"><a href="https://github.com/Lantern-mc/dist/releases">See all versions on GitHub</a></p></div></article></noscript>
+<section class="wrap dl-hero" aria-labelledby="dl-title">
+  <div class="dl-hero-copy">
+    <p class="eyebrow">Download</p>
+    <h1 id="dl-title">Lantern launcher</h1>
+    <p class="lead">The Windows program for joining a Discord server's Minecraft world. Install it once; it fetches new versions on its own.</p>
+    <a class="btn dl-cta" id="dl-cta" href="https://github.com/Lantern-mc/dist/releases/latest/download/LanternLauncher.exe"><span class="dl-cta-main">Download LanternLauncher.exe</span><span class="dl-cta-sub" id="dl-cta-sub">Latest version</span></a>
+    <p class="dl-facts" id="dl-facts"><span>Windows 10, 11</span><span>No administrator rights needed</span></p>
+    <p class="dl-links"><a id="dl-sha" href="https://github.com/Lantern-mc/dist/releases" hidden>SHA-256 hash</a><a href="#dl-history">All versions</a></p>
   </div>
+  <div class="dl-visual mock" aria-hidden="true" inert>
+    <div class="win win-launcher">
+      <div class="win-bar"><img src="../assets/img/lantern-64.png" alt=""><span>Lantern Launcher</span></div>
+      <div class="lw-body">
+        <div class="lw-side">
+          <div class="lw-item on"><span class="tile"></span><b>Aurora SMP</b></div>
+          <div class="lw-item"><span class="tile t2"></span><b>Tide Survival</b></div>
+          <div class="lw-item add" title="Add server"><span class="lw-add-icon" aria-hidden="true">+</span><span class="sr">Add server</span></div>
+        </div>
+        <div class="lw-hero">
+          <div class="lw-art"></div>
+          <div class="lw-card">Welcome. Check the notices before you join.</div>
+          <div class="lw-name"><img src="../assets/img/lantern-64.png" alt="">Aurora SMP</div>
+          <div class="lw-meta">Modpack 2.4.0 · Minecraft 1.21.1 · NeoForge</div>
+          <div class="lw-status"><span class="dot" data-s="on"></span>Online · 3 players</div>
+          <div class="lw-actions"><span class="btn primary">Join server</span><span class="btn">Play</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap dl-next" aria-labelledby="dl-next-title">
+  <h2 id="dl-next-title">After you download</h2>
+  <ol class="dl-steps">
+    <li><h3>Open the file</h3><p>Open <code>LanternLauncher.exe</code>. If Windows shows "Windows protected your PC", choose <span class="ui">More info</span>, then <span class="ui">Run anyway</span>.</p></li>
+    <li><h3>Get your accounts ready</h3><p>Make sure the CurseForge app is installed, then sign in with the Microsoft account that owns Minecraft.</p></li>
+    <li><h3>Join the server</h3><p>On the server's web panel (ask its admins for the address), press <span class="ui">Join server</span>. The launcher sets up the modpack and starts the game.</p></li>
+  </ol>
+  <p class="dl-more"><a href="https://github.com/Lantern-mc/dist/wiki/설치">More on installing and removing</a></p>
+</section>
+
+<section class="wrap dl-changes" id="dl-changes" aria-labelledby="dl-changes-title" hidden>
+  <h2 id="dl-changes-title">What changed in this version</h2>
+  <div class="dl-notes dl-changes-body" id="dl-changes-body"></div>
+</section>
+
+<section class="wrap dl-history" id="dl-history" aria-labelledby="dl-history-title">
+  <h2 id="dl-history-title">All versions</h2>
+  <ol class="dl-timeline" id="dl-timeline" aria-live="polite"><li class="dl-loading">Loading versions…</li></ol>
+  <p class="dl-error" id="dl-error" hidden></p>
+  <noscript><p class="dl-error"><a href="https://github.com/Lantern-mc/dist/releases">See all versions on GitHub</a></p></noscript>
 </section>
 </main>
 <footer class="foot"><div class="foot-in"><p class="foot-links"><a href="https://github.com/Lantern-mc/dist/wiki/">Wiki (Korean)</a> · <a href="https://github.com/Lantern-mc/dist/wiki/개인정보-처리방침">Privacy policy (Korean)</a> · <a href="https://github.com/Lantern-mc/dist/wiki/변경-기록">Changelog (Korean)</a></p><p>Lantern Launcher is a Windows program for joining Lantern servers. It is an independent project with no affiliation with Mojang, Microsoft or CurseForge. Minecraft and CurseForge are trademarks of their respective owners.</p><p>Fonts: IBM Plex Sans KR (© 2017 IBM Corp.) and JetBrains Mono (© 2020 The JetBrains Mono Project Authors), converted to the web font format (WOFF2) and used under the SIL Open Font License 1.1. Full license texts: <a href="../assets/fonts/IBMPlexSansKR-OFL.txt">IBM Plex Sans KR</a>, <a href="../assets/fonts/JetBrainsMono-OFL.txt">JetBrains Mono</a>.</p></div></footer>

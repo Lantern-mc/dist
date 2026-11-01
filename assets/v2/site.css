@@ -497,52 +497,82 @@ html.panelmap-ready .panelmap-panels [id^="spot-"]:not(.is-open) { display: none
 }
 @media (max-width: 51.999rem) { .hero { overflow-x: clip; } } /* the floating hero windows rotate a little and would add a few px of page width */
 
-/* ---- download page: the newest stable release is the lit lantern, older ones a quiet list ---- */
-.dl-page { padding-block: 3.5rem 5rem; }
-.dl-page .lead a { color: var(--text); }
-.dl-releases { margin-top: 2.75rem; }
-.dl-loading { color: var(--dim); }
-.dl-latest {
-  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 2.5rem; padding: 2rem 2.1rem; border-radius: 18px;
-  background: linear-gradient(160deg, rgb(245 177 76 / .13), rgb(24 25 29 / .94) 45%);
-  border: 1px solid rgb(245 177 76 / .32);
-  box-shadow: 0 30px 70px -24px rgb(0 0 0 / .7), 0 0 60px -12px rgb(245 177 76 / .38);
+/* ---- download page: one lit button, what happens next, then the versions as a timeline ---- */
+.dl-hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 3.5rem; align-items: center; padding-block: 4.5rem 4rem; }
+.dl-hero .lead { max-width: 30rem; }
+.dl-cta {
+  display: inline-flex; flex-direction: column; align-items: flex-start; gap: .15rem; margin-top: 2.2rem;
+  min-height: 0; padding: 1.05rem 2.1rem 1rem; border-radius: 16px; font-size: 1.2rem;
+  box-shadow: 0 1px 0 rgb(255 255 255 / .45) inset, 0 0 0 6px rgb(245 177 76 / .12), 0 18px 60px -10px rgb(245 177 76 / .8);
 }
-.dl-fallback { grid-template-columns: minmax(0, 1fr); }
-.dl-ver { display: flex; align-items: center; gap: .9rem; font-size: clamp(3rem, 2rem + 4vw, 4.75rem); letter-spacing: -.04em; line-height: 1; }
-.dl-tag {
-  font-size: .85rem; font-weight: 700; letter-spacing: 0; padding: .25rem .65rem; border-radius: 999px;
-  background: var(--amber); color: var(--amber-text); box-shadow: 0 0 18px -2px rgb(245 177 76 / .7);
+.dl-cta:hover { box-shadow: 0 1px 0 rgb(255 255 255 / .45) inset, 0 0 0 8px rgb(245 177 76 / .16), 0 22px 70px -10px rgb(245 177 76 / .9); }
+.dl-cta-sub { font-size: .88rem; font-weight: 500; opacity: .78; }
+.dl-facts { display: flex; flex-wrap: wrap; gap: .3rem 1.25rem; margin: 1.4rem 0 0; color: var(--muted); font-size: .98rem; }
+.dl-links { display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; margin: .7rem 0 0; font-size: .95rem; }
+.dl-links a, .dl-more a, .dl-error a { color: var(--dim); }
+.dl-links a:hover, .dl-more a:hover, .dl-error a:hover { color: var(--text); }
+.dl-visual { position: relative; }
+.dl-visual::before { /* the lamp behind the window */
+  content: ""; position: absolute; inset: 8% 4% -6%; z-index: -1;
+  background: radial-gradient(closest-side, rgb(245 177 76 / .32), transparent); filter: blur(10px);
 }
-.dl-tag-quiet { background: rgb(255 255 255 / .08); color: var(--muted); box-shadow: none; font-weight: 600; }
-.dl-meta { display: flex; flex-wrap: wrap; gap: .35rem 1.1rem; margin: .9rem 0 0; color: var(--muted); font-size: 1rem; }
-.dl-latest .actions { margin-top: 1.6rem; }
-.dl-sub { margin: .9rem 0 0; color: var(--dim); font-size: .95rem; line-height: 1.55; }
-.dl-sub a, .dl-msg a { color: var(--muted); }
-.dl-msg { margin: 0; color: var(--muted); }
-.dl-notes { border-left: 1px solid rgb(255 255 255 / .1); padding-left: 2.1rem; color: var(--muted); font-size: 1rem; line-height: 1.6; }
-.dl-notes h3 { font-size: 1.05rem; color: var(--text); margin-bottom: .2rem; }
-.dl-notes h4, .dl-row-notes h4 { margin: 1.1rem 0 .3rem; font-size: .95rem; color: var(--text); }
-.dl-notes ul, .dl-row-notes ul { margin: 0; padding-left: 1.1rem; }
-.dl-notes li + li, .dl-row-notes li + li { margin-top: .3rem; }
-.dl-notes p, .dl-row-notes p { margin: .8rem 0 0; }
-.dl-notes code, .dl-row-notes code { font-family: var(--mono); font-size: .85em; word-break: normal; overflow-wrap: anywhere; }
-.dl-older-title { font-size: clamp(1.35rem, 1.1rem + 1vw, 1.75rem); margin: 3.5rem 0 1rem; }
-.dl-list { list-style: none; margin: 0; padding: 0; border: 1px solid rgb(255 255 255 / .08); border-radius: 16px; background: rgb(24 25 29 / .7); overflow: hidden; }
-.dl-row + .dl-row { border-top: 1px solid rgb(255 255 255 / .07); }
-.dl-row-head { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; }
-.dl-row-info { display: flex; align-items: center; flex-wrap: wrap; gap: .3rem 1.1rem; flex: 1; min-width: 0; }
-.dl-row-ver { font-size: 1.15rem; min-width: 4.5rem; }
-.dl-row .dl-meta { margin: 0; font-size: .95rem; }
-.dl-row-btn { flex-shrink: 0; min-height: 2.4rem; padding: .35rem 1.1rem; font-size: .95rem; }
-.dl-row details { padding: 0 1.25rem 1rem; }
-.dl-row summary { cursor: pointer; color: var(--dim); font-size: .95rem; width: max-content; }
-.dl-row summary:hover { color: var(--text); }
-.dl-row-notes { margin-top: .6rem; color: var(--muted); font-size: .97rem; line-height: 1.6; }
+.dl-visual .win { transform: rotate(1.2deg); }
+
+.dl-next, .dl-changes, .dl-history { padding-block: 2.5rem; }
+.dl-next h2, .dl-changes h2, .dl-history h2 { font-size: clamp(1.5rem, 1.15rem + 1.4vw, 2.1rem); }
+.dl-steps { list-style: none; counter-reset: dl-step; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin: 1.6rem 0 0; padding: 0; }
+.dl-steps li {
+  counter-increment: dl-step; position: relative; padding: 1.35rem 1.35rem 1.4rem; border-radius: 14px;
+  background: rgb(24 25 29 / .85); border: 1px solid rgb(255 255 255 / .07);
+}
+.dl-steps li::before {
+  content: counter(dl-step); display: grid; place-items: center; width: 2rem; height: 2rem; margin-bottom: .9rem; border-radius: 50%;
+  font-weight: 700; font-size: .95rem; color: var(--amber-text); background: var(--amber); box-shadow: 0 0 16px -2px rgb(245 177 76 / .7);
+}
+.dl-steps h3 { font-size: 1.08rem; margin-bottom: .4rem; }
+.dl-steps p { margin: 0; color: var(--muted); font-size: .98rem; line-height: 1.6; }
+.dl-steps code, .dl-notes code { font-family: var(--mono); font-size: .86em; word-break: normal; overflow-wrap: anywhere; }
+.dl-more { margin: 1rem 0 0; font-size: .95rem; }
+
+.dl-notes { color: var(--muted); font-size: 1rem; line-height: 1.6; }
+.dl-notes h4 { margin: 0 0 .4rem; font-size: 1rem; color: var(--text); break-after: avoid; }
+.dl-notes ul { margin: 0 0 1.2rem; padding-left: 1.1rem; break-inside: avoid; }
+.dl-notes li + li { margin-top: .3rem; }
+.dl-notes p { margin: 0 0 1rem; }
+.dl-changes-body { columns: 2 22rem; column-gap: 3rem; margin-top: 1.4rem; max-width: 62rem; }
+
+.dl-timeline { list-style: none; margin: 1.6rem 0 0; padding: 0 0 0 1.6rem; position: relative; max-width: 40rem; }
+.dl-timeline::before { content: ""; position: absolute; left: .4rem; top: .9rem; bottom: .9rem; width: 2px; background: linear-gradient(rgb(245 177 76 / .55), rgb(255 255 255 / .08) 40%); }
+.dl-tl-item { position: relative; padding: .55rem 0 1.1rem; }
+.dl-tl-item::before {
+  content: ""; position: absolute; left: -1.6rem; top: 1.15rem; width: .85rem; height: .85rem; margin-left: .05rem; border-radius: 50%;
+  background: #2a2c32; box-shadow: 0 0 0 4px var(--bg);
+}
+.dl-tl-item.is-latest::before { background: var(--amber); box-shadow: 0 0 0 4px var(--bg), 0 0 18px 2px rgb(245 177 76 / .75); }
+.dl-tl-head { display: flex; align-items: center; gap: 1rem; }
+.dl-tl-info { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem 1rem; flex: 1; min-width: 0; }
+.dl-tl-ver { font-size: 1.3rem; letter-spacing: -.02em; }
+.dl-tl-item:not(.is-latest) .dl-tl-ver { color: var(--muted); }
+.dl-tl-meta { display: flex; flex-wrap: wrap; gap: .2rem 1rem; color: var(--dim); font-size: .95rem; }
+.dl-tag { align-self: center; font-size: .78rem; font-weight: 700; padding: .15rem .55rem; border-radius: 999px; background: var(--amber); color: var(--amber-text); }
+.dl-tag-quiet { background: rgb(255 255 255 / .08); color: var(--muted); font-weight: 600; }
+.dl-tl-get { flex-shrink: 0; min-height: 2.4rem; padding: .35rem 1.1rem; font-size: .95rem; }
+.dl-tl-item details { margin-top: .5rem; }
+.dl-tl-item summary { cursor: pointer; color: var(--dim); font-size: .95rem; width: max-content; }
+.dl-tl-item summary:hover { color: var(--text); }
+.dl-tl-item details .dl-notes { margin-top: .7rem; font-size: .97rem; }
+.dl-loading, .dl-error { color: var(--dim); }
+.dl-error { margin: 1rem 0 0; }
+
 @media (max-width: 51.999rem) {
-  .dl-latest { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; padding: 1.5rem 1.35rem; }
-  .dl-notes { border-left: 0; padding-left: 0; border-top: 1px solid rgb(255 255 255 / .1); padding-top: 1.4rem; }
+  .dl-hero { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; padding-block: 3rem 2rem; }
+  .dl-visual .win { transform: none; }
+  .dl-steps { grid-template-columns: minmax(0, 1fr); }
 }
+@media (max-width: 36rem) {
+  .dl-cta { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .dl-cta { transition: none; } }
 @media (max-width: 36rem) {
   .top-in { gap: .6rem; padding: 0 .9rem; }
   .brand span { display: none; }
