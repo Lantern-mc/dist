@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>변경 내역 - Lantern Launcher</title>
+<meta name="description" content="Lantern Launcher 0.2.6의 변경 사항.">
+<meta name="theme-color" content="#0b0c0e">
+<link rel="icon" href="assets/img/favicon.ico">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="alternate" hreflang="en" href="en/changelog.html">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="index.html"><img src="assets/img/lantern-64.png" width="28" height="28" alt="">Lantern</a>
+    <nav aria-label="주 메뉴"><ul class="nav"><li><a href="index.html">소개</a></li><li><a href="ops.html">서버 운영</a></li><li><a href="install.html" aria-current="page">런처</a></li></ul></nav>
+    <a class="lang" href="en/changelog.html" hreflang="en" lang="en" title="Read this page in English">English</a>
+  </div>
+</header>
+<div class="subnav"><div class="subnav-in"><span>런처</span><a href="download.html">다운로드</a><a href="install.html">설치</a><a href="guide.html">처음 시작하기</a><a href="usage.html">사용법</a><a href="faq.html">문제 해결</a><a href="changelog.html" aria-current="page">변경 내역</a></div></div>
+<main id="main">
+<div class="wrap article">
+  <div class="page-head"><h1>변경 내역</h1><p>버전별 다운로드는 <a href="download.html">다운로드</a> 페이지에 있습니다.</p></div>
+  <div class="read">
+    <div class="ver"><h2>0.2.6</h2><code>현재 버전</code></div>
+
+    <h3>고친 것</h3>
+    <ul>
+      <li>서버가 꺼져 있거나 접속할 수 없으면 <span class="ui">빠른 입장</span>이 비활성화되고, 버튼 위에 그 상태가 표시됩니다. <span class="ui">게임 실행</span>은 그대로 누를 수 있습니다.</li>
+      <li>로그인한 계정이 화이트리스트에 없거나 승인 대기면 <span class="ui">빠른 입장</span>과 <span class="ui">게임 실행</span>이 둘 다 비활성화됩니다. 아직 확인되지 않았거나 로그인 전에는 막지 않습니다.</li>
+      <li><span class="ui">지금 확인</span>이 모드 목록이 같은 업데이트를 그 자리에서 적용합니다.</li>
+      <li>모드가 바뀐 팩은 런처의 <span class="ui">업데이트</span> 버튼으로 설치합니다. 웹 패널을 열지 않습니다.</li>
+      <li>업데이트 중 <span class="ui">중지</span>가 적용을 취소합니다. 다음에 실행하면 남은 파일부터 맞춥니다.</li>
+      <li>중간에 끊긴 업데이트는 섞인 파일을 다시 받습니다. 서버에 닿지 않을 때는 <span class="ui">그래도 실행</span>을 묻습니다.</li>
+      <li>팩이 바꾸지 않은 설정 파일은 업데이트해도 그대로 둡니다.</li>
+      <li>게임이 켜진 뒤 이전 프로필 정리를 묻고, 서버를 지우면 이전 프로필도 지웁니다.</li>
+      <li>삭제 허락이 없어도 이 PC에서의 설치가 막히지 않습니다. 이전 프로필은 남기고 안내합니다.</li>
+    </ul>
+
+    <div class="ver"><h2>0.2.5</h2></div>
+
+    <h3>고친 것</h3>
+    <ul>
+      <li>트레이 아이콘을 누르면 런처가 멈춰 아무것도 할 수 없던 문제 수정</li>
+      <li>런처 업데이트를 누르면 받는 중이라고 알리고, 다시 켜진 뒤 새 버전으로 업데이트했다고 알림</li>
+      <li>받는 중에 업데이트를 다시 누르면 받는 중이라고만 알림</li>
+      <li>런처 업데이트가 확인 파일 형식 오류로 끝나지 않던 문제 수정</li>
+      <li>자체 업데이트가 끝나기 전에 런처를 다시 설치하면, 켤 때마다 "이전 버전으로 되돌릴 수 없습니다" 알림이 뜨던 문제 수정</li>
+      <li>모드 목록이 그대로인 팩 업데이트에도 "웹 패널에서 업데이트" 안내가 뜨던 문제 수정: 이제 게임 실행을 누르면 자동으로 적용</li>
+      <li>업데이트 안내의 웹 버튼이 모드팩 받기 버튼이 없는 페이지를 열던 문제 수정: 패널 첫 화면의 "서버 들어가기"로 안내</li>
+    </ul>
+
+    <div class="ver"><h2>0.2.1</h2></div>
+
+    <h3>업데이트</h3>
+    <ul>
+      <li>플레이를 누르면 먼저 서버 팩이 바뀌었는지 확인하고, 모드 목록이 그대로면 자동으로 적용한 뒤 실행</li>
+      <li>모드 목록이 바뀐 업데이트는 실행 전에 안내</li>
+      <li>바뀐 파일만 내려받아 업데이트가 빨라짐</li>
+      <li>서버가 정한 리소스팩을 처음 한 번 자동으로 켬</li>
+    </ul>
+
+    <h3>고친 것</h3>
+    <ul>
+      <li>팩 업데이트 뒤 이름이 바뀐 예전 모드·리소스팩이 남아 있던 문제 수정</li>
+      <li>팩에서 바뀌지 않은 설정 파일(<code>options.txt</code> 등)을 업데이트할 때마다 덮어쓰던 문제 수정</li>
+      <li>업데이트가 중간에 실패해도 이전 버전으로 계속 플레이할 수 있게 수정</li>
+    </ul>
+
+    <div class="ver"><h2>0.2.0</h2></div>
+
+    <h3>새로 생긴 것</h3>
+    <ul>
+      <li>홈 화면에 서버 공지 카드</li>
+      <li>홈 화면과 왼쪽 목록에 서버 온라인/오프라인 상태</li>
+      <li>게임을 켜기 전에 닉네임이 화이트리스트에 있는지 확인</li>
+      <li>허용했지만 설치가 끝나지 않은 서버도 목록에 표시</li>
+      <li>서버가 정한 제목 이미지를 홈 화면에 표시</li>
+      <li>이름을 Lantern Launcher로 통일하고, 들어가는 버튼을 <span class="ui">서버 들어가기</span>로 정리</li>
+    </ul>
+
+    <h3>설치와 업데이트</h3>
+    <ul>
+      <li>설치가 진행 상황을 보며 기다리고, 실패한 뒤에도 다시 시도할 수 있게 개선</li>
+      <li>설치가 끝나지 않았는데 최신이라고 표시하던 문제 수정</li>
+      <li>웹 패널의 링크로 게임을 켜면 바로 서버에 접속</li>
+      <li>서버가 주소를 바꾸거나 지우면 이 PC의 멀티플레이 목록에도 반영</li>
+      <li>서버가 거절한 이유를 “다시 연결”이라고만 하지 않고 구체적으로 안내</li>
+      <li>CurseForge가 파일을 열고 있어도 인스턴스를 읽고, CurseForge에서 모드를 따로 추가해도 모드팩이 불완전하다고 보지 않도록 수정</li>
+    </ul>
+
+    <h3>화면과 안정성</h3>
+    <ul>
+      <li>팝업 뒤에 시스템 제목 표시줄이 비치던 문제 수정</li>
+      <li>상태 카드의 버튼이 카드 밖으로 나가지 않고 다음 줄로 이어지도록 수정</li>
+      <li>화면 배율을 바꾸는 중 창 메시지가 겹치면 오류가 나던 문제 수정</li>
+    </ul>
+  </div>
+</div>
+</main>
+<footer class="foot"><div class="foot-in"><p>Lantern Launcher는 Lantern 서버에 들어가기 위한 Windows용 프로그램입니다. Mojang, Microsoft, CurseForge와 관련 없는 독립 프로젝트이며, Minecraft와 CurseForge는 각 권리자의 상표입니다.</p><p>글꼴: IBM Plex Sans KR(© 2017 IBM Corp.)과 JetBrains Mono(© 2020 The JetBrains Mono Project Authors)를 SIL Open Font License 1.1에 따라 웹 글꼴 형식(WOFF2)으로 변환해 사용합니다. 라이선스 전문: <a href="assets/fonts/IBMPlexSansKR-OFL.txt">IBM Plex Sans KR</a>, <a href="assets/fonts/JetBrainsMono-OFL.txt">JetBrains Mono</a>.</p></div></footer>
+</body>
+</html>

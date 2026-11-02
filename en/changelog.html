@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changelog - Lantern Launcher</title>
+<meta name="description" content="What changed in Lantern Launcher 0.2.6.">
+<meta name="theme-color" content="#0b0c0e">
+<link rel="icon" href="../assets/img/favicon.ico">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="alternate" hreflang="ko" href="../changelog.html">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="index.html"><img src="../assets/img/lantern-64.png" width="28" height="28" alt="">Lantern Launcher</a>
+    <nav aria-label="Main menu"><ul class="nav"><li><a href="index.html">About</a></li><li><a href="download.html">Download</a></li><li><a href="install.html">Install</a></li><li><a href="guide.html">First run</a></li><li><a href="usage.html">Using the Launcher</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="changelog.html" aria-current="page">Changelog</a></li></ul></nav>
+    <a class="lang" href="../changelog.html" hreflang="ko" lang="ko" title="이 페이지를 한국어로 보기">한국어</a>
+  </div>
+</header>
+<main id="main">
+<div class="wrap article">
+  <div class="page-head"><h1>Changelog</h1><p>Downloads for every version are on the <a href="download.html">Download</a> page.</p></div>
+  <div class="read">
+    <div class="ver"><h2>0.2.6</h2><code>current</code></div>
+
+    <h3>Fixes</h3>
+    <ul>
+      <li>When the server is off or cannot be joined, <span class="ui">Quick join</span> is disabled and the status is shown above the button. <span class="ui">Launch game</span> still works.</li>
+      <li>When the signed-in account is not whitelisted or is waiting for approval, both <span class="ui">Quick join</span> and <span class="ui">Launch game</span> are disabled. An unknown answer, a failed check, or being signed out does not block the buttons.</li>
+      <li><span class="ui">Check now</span> applies an update whose mod list did not change, in place.</li>
+      <li>A pack whose mods changed is installed with the launcher's <span class="ui">Update</span> button, without opening the web panel.</li>
+      <li><span class="ui">Stop</span> during an update cancels the apply. The next launch finishes the remaining files first.</li>
+      <li>An update that stopped halfway replaces the mixed files. If the server cannot be reached, the launcher asks whether to start anyway.</li>
+      <li>Settings files the pack did not change are kept.</li>
+      <li>After the game starts, the launcher offers to remove the previous profile, and deleting the server removes those older profiles too.</li>
+      <li>An install on this PC is no longer stuck when there is no delete permission. The previous profile is kept and you are told.</li>
+    </ul>
+
+    <div class="ver"><h2>0.2.5</h2></div>
+
+    <h3>Fixes</h3>
+    <ul>
+      <li>Clicking the tray icon could freeze the launcher so nothing worked</li>
+      <li>Installing a launcher update now says the download started, and says the new version is in place after the restart</li>
+      <li>Pressing update again during the download only says it is downloading</li>
+      <li>A launcher update no longer stops on a check-file format error</li>
+      <li>Reinstalling the launcher before a self-update had finished made every start report "could not roll back to the previous version"</li>
+      <li>A pack update with the same mod list no longer asks you to update on the web panel: pressing Launch game applies it</li>
+      <li>The update notice's web button opened a page without a modpack button: it now opens the panel home with "Join server"</li>
+    </ul>
+
+    <div class="ver"><h2>0.2.1</h2></div>
+
+    <h3>Updates</h3>
+    <ul>
+      <li>Play first checks whether the server pack changed and, when the mod list is the same, applies it before starting</li>
+      <li>An update that changes the mod list is announced before starting</li>
+      <li>Only changed files are downloaded, so updates are faster</li>
+      <li>Resource packs chosen by the server are turned on once</li>
+    </ul>
+
+    <h3>Fixed</h3>
+    <ul>
+      <li>Old mods and resource packs with a new name stayed behind after a pack update</li>
+      <li>Settings files the pack did not change (<code>options.txt</code> and others) were overwritten on every update</li>
+      <li>A failed update no longer stops you from playing the previous version</li>
+    </ul>
+
+    <div class="ver"><h2>0.2.0</h2></div>
+
+    <h3>New</h3>
+    <ul>
+      <li>A server notices card on the home screen</li>
+      <li>Server online/offline status on the home screen and in the list on the left</li>
+      <li>A check, before the game starts, that your nickname is on the whitelist</li>
+      <li>Servers you allowed but whose install is not finished now appear in the list</li>
+      <li>The server's title image is drawn on the home screen</li>
+      <li>One name, Lantern Launcher, and the join button is now <span class="ui">Join server</span></li>
+    </ul>
+
+    <h3>Install and updates</h3>
+    <ul>
+      <li>The install waits by watching progress, and can be retried after a failure</li>
+      <li>Fixed an unfinished install being shown as up to date</li>
+      <li>Starting the game from the web panel link now joins the server straight away</li>
+      <li>A changed or cleared server address now reaches this PC's multiplayer list as well</li>
+      <li>When the server refuses you, the reason is stated instead of a generic &ldquo;reconnect&rdquo;</li>
+      <li>Instances are read even while CurseForge has their files open, and a mod you add yourself in CurseForge no longer makes the modpack look incomplete</li>
+    </ul>
+
+    <h3>Screen and stability</h3>
+    <ul>
+      <li>Fixed the system title bar showing behind a popup</li>
+      <li>Buttons on a status card now wrap to the next row instead of running past the card edge</li>
+      <li>Fixed an error when a window message arrived while the display scale was being resolved</li>
+    </ul>
+  </div>
+</div>
+</main>
+<footer class="foot"><div class="foot-in"><p>Lantern Launcher is a Windows program for joining Lantern servers. It is an independent project, not affiliated with Mojang, Microsoft or CurseForge; Minecraft and CurseForge are trademarks of their owners.</p><p>Fonts: IBM Plex Sans KR (&copy; 2017 IBM Corp.) and JetBrains Mono (&copy; 2020 The JetBrains Mono Project Authors), converted to the WOFF2 web format and used under the SIL Open Font License 1.1. Full licence texts: <a href="../assets/fonts/IBMPlexSansKR-OFL.txt">IBM Plex Sans KR</a>, <a href="../assets/fonts/JetBrainsMono-OFL.txt">JetBrains Mono</a>.</p></div></footer>
+</body>
+</html>
