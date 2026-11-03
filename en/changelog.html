@@ -23,15 +23,44 @@
 <div class="wrap article">
   <div class="page-head"><h1>Changelog</h1><p>Downloads for every version are on the <a href="download.html">Download</a> page.</p></div>
   <div class="read">
-    <div class="ver"><h2>0.2.7</h2><code>current</code></div>
+    <div class="ver"><h2>0.2.8</h2><code>current</code></div>
+    <p>Includes the changes of 0.2.7.</p>
 
-    <h3>Fixes</h3>
+    <h3>Window and notices</h3>
     <ul>
-      <li>After you switch Minecraft accounts, the previous account's whitelist answer no longer leaves <span class="ui">Quick join</span> and <span class="ui">Launch game</span> disabled. The launcher tells the server the current account first, then checks.</li>
-      <li>A whitelist check that fails briefly keeps the last answer, so the buttons no longer flip on and off.</li>
-      <li>CurseForge import codes no longer appear in failure notices or logs when an install or launch fails.</li>
-      <li>When the server is off, "Offline" is shown once instead of twice.</li>
+      <li>Pressing <span class="ui">Join server</span> in the web panel brings the launcher forward with that server selected, so you can see the progress.</li>
+      <li>Settings let you choose what the launcher window does when the game starts: minimize (default), hide to tray, or keep open.</li>
+      <li>Settings let you choose whether the close button (X) hides the launcher to the tray (default) or quits it.</li>
+      <li>The "Ready" window no longer appears when the launcher starts the game itself.</li>
+      <li>Questions that come up after the game started (such as cleaning up the previous profile) no longer jump over the game; the taskbar button flashes instead.</li>
+      <li>The <span class="ui">Sign in with Microsoft</span> and <span class="ui">Get CurseForge</span> buttons on the first-run screens are no longer hidden.</li>
+    </ul>
+
+    <h3>When CurseForge is missing</h3>
+    <ul>
+      <li>Installing a new server without CurseForge shows a "CurseForge is needed" window with a <span class="ui">Get CurseForge</span> button before the link is used.</li>
+      <li>An install that fails because CurseForge is missing says so, with the download button, instead of an unreadable error.</li>
+      <li>Playing a server that is already installed still works without CurseForge.</li>
+    </ul>
+
+    <h3>Installs and updates</h3>
+    <ul>
+      <li>The server's picture and title no longer turn into the default art during a modpack update.</li>
+      <li>However a modpack spells its paths, the player's worlds (<code>saves</code>) are never overwritten or deleted.</li>
+      <li>After you move the CurseForge folder, an old profile no longer blocks an install. It is kept and you are told.</li>
+      <li>Installing or updating one server no longer blocks work on other servers.</li>
       <li>When a mod is updated under a different file name, the same mod (mod ID) is no longer loaded twice. An old file with the same ID as a pack mod is renamed to <code>.lantern-old</code>, which the game does not read. Nothing is deleted.</li>
+      <li>If the launcher's server record file is damaged by a sudden shutdown, it is restored from the previous copy.</li>
+    </ul>
+
+    <h3>Adding servers and accounts</h3>
+    <ul>
+      <li>Adding a server with an empty folder, or an instance another server already uses, is refused right away. If the folder is not that server's modpack, the add is undone and you are asked to try again with a new link.</li>
+      <li>After you switch Minecraft accounts, the previous account's whitelist answer no longer leaves <span class="ui">Quick join</span> and <span class="ui">Launch game</span> disabled.</li>
+      <li>A whitelist check that fails briefly keeps the last answer, so the buttons no longer flip on and off.</li>
+      <li>When the server is off, "Offline" is shown once.</li>
+      <li><span class="ui">Check for updates</span> in Settings checks right away, and says it could not check instead of "no new version" when it could not.</li>
+      <li>CurseForge import codes no longer appear in failure notices or logs when an install or launch fails.</li>
     </ul>
 
     <div class="ver"><h2>0.2.6</h2></div>
