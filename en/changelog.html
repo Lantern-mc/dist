@@ -35,48 +35,36 @@
     </ul>
 
     <div class="ver"><h2>0.2.6</h2></div>
+    <p>The changes of 0.2.1, 0.2.5 and 0.2.6 together.</p>
 
-    <h3>Fixes</h3>
+    <h3>Modpack updates</h3>
     <ul>
-      <li>When the server is off or cannot be joined, <span class="ui">Quick join</span> is disabled and the status is shown above the button. <span class="ui">Launch game</span> still works.</li>
-      <li>When the signed-in account is not whitelisted or is waiting for approval, both <span class="ui">Quick join</span> and <span class="ui">Launch game</span> are disabled. An unknown answer, a failed check, or being signed out does not block the buttons.</li>
-      <li><span class="ui">Check now</span> applies an update whose mod list did not change, in place.</li>
-      <li>A pack whose mods changed is installed with the launcher's <span class="ui">Update</span> button, without opening the web panel.</li>
+      <li><span class="ui">Launch game</span> first checks whether the server pack changed and, when the mod list is the same, applies it in place before starting. You are no longer told to update on the web panel.</li>
+      <li><span class="ui">Check now</span> also applies an update whose mod list did not change, in place.</li>
+      <li>A pack whose mods changed is announced before starting and installed with the launcher's <span class="ui">Update</span> button, without opening the web panel.</li>
+      <li>Only changed files are downloaded, so updates are faster.</li>
+      <li>Resource packs chosen by the server are turned on once.</li>
       <li><span class="ui">Stop</span> during an update cancels the apply. The next launch finishes the remaining files first.</li>
       <li>An update that stopped halfway replaces the mixed files. If the server cannot be reached, the launcher asks whether to start anyway.</li>
-      <li>Settings files the pack did not change are kept.</li>
+      <li>Settings files the pack did not change (<code>options.txt</code> and others) are kept.</li>
+      <li>Old mods and resource packs with a new name no longer stay behind after a pack update.</li>
       <li>After the game starts, the launcher offers to remove the previous profile, and deleting the server removes those older profiles too.</li>
       <li>An install on this PC is no longer stuck when there is no delete permission. The previous profile is kept and you are told.</li>
     </ul>
 
-    <div class="ver"><h2>0.2.5</h2></div>
-
-    <h3>Fixes</h3>
+    <h3>Buttons and notices</h3>
     <ul>
-      <li>Clicking the tray icon could freeze the launcher so nothing worked</li>
-      <li>Installing a launcher update now says the download started, and says the new version is in place after the restart</li>
-      <li>Pressing update again during the download only says it is downloading</li>
-      <li>A launcher update no longer stops on a check-file format error</li>
-      <li>Reinstalling the launcher before a self-update had finished made every start report "could not roll back to the previous version"</li>
-      <li>A pack update with the same mod list no longer asks you to update on the web panel: pressing Launch game applies it</li>
-      <li>The update notice's web button opened a page without a modpack button: it now opens the panel home with "Join server"</li>
+      <li>When the server is off or cannot be joined, <span class="ui">Quick join</span> is disabled and the status is shown above the button. <span class="ui">Launch game</span> still works.</li>
+      <li>When the signed-in account is not whitelisted or is waiting for approval, both <span class="ui">Quick join</span> and <span class="ui">Launch game</span> are disabled. An unknown answer, a failed check, or being signed out does not block the buttons.</li>
+      <li>The update notice's web button opens the panel home with "Join server".</li>
     </ul>
 
-    <div class="ver"><h2>0.2.1</h2></div>
-
-    <h3>Updates</h3>
+    <h3>Launcher updates and stability</h3>
     <ul>
-      <li>Play first checks whether the server pack changed and, when the mod list is the same, applies it before starting</li>
-      <li>An update that changes the mod list is announced before starting</li>
-      <li>Only changed files are downloaded, so updates are faster</li>
-      <li>Resource packs chosen by the server are turned on once</li>
-    </ul>
-
-    <h3>Fixed</h3>
-    <ul>
-      <li>Old mods and resource packs with a new name stayed behind after a pack update</li>
-      <li>Settings files the pack did not change (<code>options.txt</code> and others) were overwritten on every update</li>
-      <li>A failed update no longer stops you from playing the previous version</li>
+      <li>Clicking the tray icon could freeze the launcher so nothing worked. Fixed.</li>
+      <li>Installing a launcher update says the download started, and says the new version is in place after the restart. Pressing update again during the download only says it is downloading.</li>
+      <li>A launcher update no longer stops on a check-file format error.</li>
+      <li>Reinstalling the launcher before a self-update had finished no longer makes every start report "could not roll back to the previous version".</li>
     </ul>
 
     <div class="ver"><h2>0.2.0</h2></div>
