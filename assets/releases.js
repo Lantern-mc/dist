@@ -53,9 +53,16 @@
     return out;
   }
 
+  // Release notes from site/release-notes.md hold "## 한국어" and "## English" sections; keep only this page's language.
+  function pickLanguage(text) {
+    var m = text.match(/^## 한국어\s*\n([\s\S]*?)^## English\s*\n([\s\S]*)$/m);
+    if (!m) return text;
+    return lang === 'en' ? m[2] : m[1];
+  }
+
   function renderBody(body) {
     if (!body || !String(body).trim()) return '';
-    var lines = String(body).replace(/\r\n/g, '\n').split('\n');
+    var lines = pickLanguage(String(body).replace(/\r\n/g, '\n')).split('\n');
     var html = '';
     var inUl = false;
     var para = [];
